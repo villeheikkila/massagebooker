@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/appointments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjhhbnRvbjEyMzEyMzFtQGdtYWlsLmNvbSIsIm5hbWUiOiJBbnRvbiIsImlkIjoiNWNlNjY2Mjg3YjllOTUyNzMyM2ViYWFlIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg2MDMzMTh9.O0AXV5GHvI0JzjQCTMmYKXDbtXScNJ_yn4HVhbsRGus
+
+{
+  "user_id": "5ce666287b9e9527323ebaae"
+}
