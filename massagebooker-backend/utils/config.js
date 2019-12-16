@@ -2,19 +2,17 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-let PORT = process.env.PORT
-let MONGODB_URI = process.env.MONGODB_URI
-let CLIENT_ID = process.env.CLIENT_ID
-let CLIENT_SECRET = process.env.CLIENT_SECRET
-let COOKIE_KEY = process.env.COOKIE_KEY
-let EMAIL_SUFFIX = process.env.EMAIL_SUFFIX
-let INITIAL_ADMIN = process.env.INITIAL_ADMIN
-let EMAIL_WHITELIST = process.env.EMAIL_WHITELIST.split(',')
+const PORT = process.env.PORT
+const MONGODB_URI = process.env.NODE_ENV === 'test' ? process.env.TEST_MONGODB_URI : process.env.MONGODB_URI
+const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_SECRET = process.env.CLIENT_SECRET
+const COOKIE_KEY = process.env.COOKIE_KEY
+const EMAIL_SUFFIX = process.env.EMAIL_SUFFIX
+const INITIAL_ADMIN = process.env.INITIAL_ADMIN
+const EMAIL_WHITELIST = process.env.EMAIL_WHITELIST
 
 
-if (process.env.NODE_ENV === 'test') {
-  MONGODB_URI = process.env.TEST_MONGODB_URI
-}
+
 
 module.exports = {
   MONGODB_URI,
