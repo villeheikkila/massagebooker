@@ -1,5 +1,6 @@
 {
-  "name": "massage-booking-system-frontend",
+  "name": "massagebooker",
+  "description": "Frontend for massagebooker",
   "version": "0.1.0",
   "author": "Massage Booking System",
   "license": "MIT",

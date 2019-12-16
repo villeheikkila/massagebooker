@@ -1,7 +1,7 @@
 {
-  "name": "massage-booking-system-backend",
+  "name": "massagebooker-backend",
   "version": "0.0.1",
-  "description": "Node.js backend for frontend",
+  "description": "Backend for massagebooker",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
