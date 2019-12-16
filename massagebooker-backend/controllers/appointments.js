@@ -137,7 +137,7 @@ appointmentsRouter.put('/:id/remove', verify.verifyIfAdmin, async (req, res, nex
  */
 appointmentsRouter.put('/:id/add', verify.verifyIfAdmin, async (req, res, next) => {
   try {
-    let appointment = await Appointment.findById(req.params.id)
+    const appointment = await Appointment.findById(req.params.id)
     appointment.type_of_reservation = 0
 
     const response = await appointment.save()
@@ -160,11 +160,10 @@ appointmentsRouter.put('/:date/removeDate', verify.verifyIfAdmin, async (req, re
     const appointments = await Appointment.find()
     const appointmentsToRemove = appointments.filter(appoint => appoint.start_date.getDate() === day && appoint.start_date.getMonth() === month && appoint.start_date.getYear() === year)
 
-    let updatedAppointments = []
-    for (let appoint of appointmentsToRemove) {
+    const updatedAppointments = appointmentsToRemove.reduce(async (updated, appoint) => {
       const updatedAppointment = await appointmentUtil.removeAppointment(appoint)
-      updatedAppointments.push(updatedAppointment)
-    }
+      updated.push(updatedAppointment)
+    }, [])
 
     res.json(updatedAppointments.map(formatAppointment))
   } catch (exception) {
@@ -177,10 +176,10 @@ appointmentsRouter.put('/:date/removeDate', verify.verifyIfAdmin, async (req, re
  */
 appointmentsRouter.put('/:date/addDate', verify.verifyIfAdmin, async (req, res, next) => {
   try {
-    let start = new Date(req.params.date)
+    const start = new Date(req.params.date)
     start.setHours(start.getHours() + 3)
 
-    let end = new Date(start)
+    const end = new Date(start)
     end.setHours(end.getHours() + 23)
 
     const appointments = await Appointment.find({
@@ -190,15 +189,13 @@ appointmentsRouter.put('/:date/addDate', verify.verifyIfAdmin, async (req, res, 
       },
     })
 
-    let updatedAppointments = []
-    for (let appointment of appointments) {
+    const updatedAppointments = appointments.reduce(async (updated, appointment) => {
       appointment.type_of_reservation = 0
       const updatedAppointment = await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true })
-      updatedAppointments.push(updatedAppointment)
-    }
+      updated.push(updatedAppointment)
+    }, [])
 
     res.json(updatedAppointments.map(formatAppointment))
-
   } catch (exception) {
     next(exception)
   }

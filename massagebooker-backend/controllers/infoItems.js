@@ -17,10 +17,12 @@ infoItemRouter.get('/', async (req, res, next) => {
 infoItemRouter.post('/', async (req, res, next) => {
   try {
     const body = req.body
+
     const item = new InfoItem({
       header: body.header,
       content: body.content
     })
+
     const savedItem = await item.save()
     res.json(savedItem)
   } catch (exception) {
@@ -28,7 +30,7 @@ infoItemRouter.post('/', async (req, res, next) => {
   }
 })
 
-infoItemRouter.delete('/:id',  async (req, res, next) => {
+infoItemRouter.delete('/:id', async (req, res, next) => {
   try {
     const item = await InfoItem.findById({ _id: req.params.id })
     await item.remove()

@@ -33,16 +33,16 @@ tvRouter.get('/', async (req, res, next) => {
     const users = await User.find({})
     const announcements = await Announcement.find().limit(1).sort({ $natural: -1 })
 
-    const tv = appointments.map(e => {
-      if (e.user_id !== null) {
-        const matchingUser = users.find(x => String(x._id) === String(e.user_id))
-        return { ...e._doc, name: matchingUser.name }
+    const tv = appointments.map(appointment => {
+      if (appointment.user_id) {
+        const matchingUser = users.find(user => String(user._id) === String(appointment.user_id))
+        return { ...appointment._doc, name: matchingUser.name }
       } else {
-        return { ...e._doc, name: '' }
+        return { ...appointment._doc, name: '' }
       }
     })
     let format = tv.map(formatTV)
-    const announcement = (announcements[0] === undefined) ? { message: '' } : { message: announcements[0].message }
+    const announcement = (!announcements[0]) ? { message: '' } : { message: announcements[0].message }
     format.push(announcement)
     res.json(format)
 
