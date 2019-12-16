@@ -65,4 +65,13 @@ const formatTime = (date) => {
   return date
 }
 
-module.exports = { formatTime, ifNotInDBCreateDay, nextSixMonths, pickDays, setDay }
+const generateAppointments = async () => {
+  try {
+    await nextSixMonths(new Date)
+  } catch (exception) {
+    console.log('exception: ', exception)
+  }
+}
+
+
+module.exports = { formatTime, ifNotInDBCreateDay, nextSixMonths, pickDays, setDay, generateAppointments }

@@ -59,25 +59,28 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
     const body = req.body
     const appointmentID = req.params.id
 
-    let user = await User.findById(body.user_id).populate('appointments')
+    const user = await User.findById(body.user_id).populate('appointments')
+
     if (!user) {
       res.status(400).end()
       return
     }
 
-    let appointment = await Appointment.findById(appointmentID)
+    const appointment = await Appointment.findById(appointmentID)
+
     if (!appointment) {
       res.status(400).end()
       return
     }
 
     if (appointment.type_of_reservation === 1 || appointment.type_of_reservation === 3) {
-      // user wishes to cancel their appointment
+      // User wishes to cancel their appointment
 
-      let userAllowedToCancel = await ruleChecker.userAllowedtoCancelAppointment(
+      const userAllowedToCancel = await ruleChecker.userAllowedtoCancelAppointment(
         user._id,
         appointment
       )
+
       if (!userAllowedToCancel) {
         res.status(400).end()
         return
@@ -85,33 +88,30 @@ appointmentsRouter.put('/:id', async (req, res, next) => {
 
       appointment.user_id = null
       appointment.type_of_reservation = body.type_of_reservation
-      appointment = await appointment.save()
+      const updatedAppointment = await appointment.save()
 
-      //remove appointment from users appointments
-      user.appointments = user.appointments.filter(app => {
-        return JSON.stringify(app._id) !== JSON.stringify(appointment._id)
-      })
-      user = await user.save()
+      // Remove appointment from users appointments
+      user.appointments = user.appointments.filter(app => JSON.stringify(app._id) !== JSON.stringify(updatedAppointment._id))
+
     } else {
-      // user wishes to make an appointment
-      let ruleCheckResult = await ruleChecker.userAllowedToMakeAppointment(
+      // User wishes to make an appointment
+      const ruleCheckResult = await ruleChecker.userAllowedToMakeAppointment(
         user.appointments,
         appointment
       )
-      if (ruleCheckResult) {
-        //user is allowed to make reservation, proceed with reservation
 
+      if (ruleCheckResult) {
+        // User is allowed to make reservation, proceed with reservation
         appointment.user_id = body.user_id
         appointment.type_of_reservation = body.type_of_reservation
-        appointment = await appointment.save()
+        const updatedAppointment = await appointment.save()
 
-        //adds appointment to users appointments
-        user.appointments = user.appointments.concat(appointment._id)
-        await user.save()
-      } else {
-        // user is not allowed to make this appointment
+        // Adds appointment to users appointments
+        user.appointments = user.appointments.concat(updatedAppointment._id)
       }
     }
+
+    await user.save()
     res.json(appointment)
   } catch (exception) {
     next(exception)
@@ -142,7 +142,6 @@ appointmentsRouter.put('/:id/add', verify.verifyIfAdmin, async (req, res, next) 
 
     const response = await appointment.save()
     return res.json(response)
-
   } catch (exception) {
     next(exception)
   }

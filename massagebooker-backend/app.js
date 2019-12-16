@@ -14,9 +14,7 @@ const middleware = require('./utils/middleware')
 
 const httpsRedirect = (req, res, next) => {
   const forwardedProtocol = req.headers['x-forwarded-proto']
-  if (forwardedProtocol === 'http') {
-    return res.redirect(`https://${req.headers.host}${req.url}`)
-  }
+  if (forwardedProtocol === 'http') return res.redirect(`https://${req.headers.host}${req.url}`)
   next()
 }
 app.use(httpsRedirect)
@@ -25,20 +23,15 @@ app.use(httpsRedirect)
 const tvRouter = require('./controllers/tv')
 app.use('/api/tv', tvRouter)
 
-// Makes passport configuration run by itself. No need for app.use(passportConfig) etc
 require('./services/passport')
 
-// 1day = 24 * 60 * 60 * 1000
-// Use multiplier as you wish
-// You can actually just faceroll the cookie key
-// More elements in keys array -> a cookie key is randomly chosen out of those
-// for additional level of security
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [config.COOKIE_KEY],
   })
 )
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -74,11 +67,8 @@ app.use('/api/info', infoItemsRouter)
 // ROUTE PROTECTION -- DISABLE FOR OWN TESTING IN REST CLIENT ETC.
 router.use(protectedRoute.routeProtector)
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/', express.static('build'))
-} else {
-  app.use(morgan('dev'))
-}
+if (process.env.NODE_ENV === 'production') app.use('/', express.static('build'))
+else app.use(morgan('dev'))
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
