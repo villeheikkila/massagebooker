@@ -72,7 +72,7 @@ const App = () => {
         type: types.GENERAL,
         icon: icons.GENERAL,
     };
-    if (user === null) {
+    if (!user) {
         return (
             <Router>
                 <Switch>
@@ -108,7 +108,7 @@ const App = () => {
                                             stats,
                                         }}
                                     >
-                                        <Route exact path="/" render={() => <Index />} />
+                                        <Route exact path="/" render={() => <Index user={user} />} />
                                         <Route exact path="/stretching" render={() => <StretchAppointmentDisplay />} />
                                         <Route exact path="/dashboard" render={() => <DashBoard />} />
                                         <Route exact path="/mypage" render={() => <MyPage />} />

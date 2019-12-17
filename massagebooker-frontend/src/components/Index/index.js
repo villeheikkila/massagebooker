@@ -1,19 +1,10 @@
 import moment from 'moment';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import { AppointmentContext, NotificationContext, UserContext } from '../../App';
+import { AppointmentContext, NotificationContext } from '../../App';
 import AllAppointments from '../AllAppointments';
-import LoginIndex from '../LoginIndex';
 import NextAppointment from '../NextAppointment';
 import Notification from '../Notification';
-
-const Index = () => {
-    const { user } = useContext(UserContext);
-    if (user) {
-        return <AuthIndex user={user} />;
-    }
-    return <LoginIndex />;
-};
 
 const titleClassName = (date, view, user, now, freeAppointments, selectedMoment) => {
     if (view === 'month') {
@@ -58,7 +49,7 @@ const titleClassName = (date, view, user, now, freeAppointments, selectedMoment)
 
 const titleDisabled = (date, view) => view === 'month' && (date.getDay() > 2 || date.getDay() === 0);
 
-const AuthIndex = ({ user }) => {
+const Index = ({ user }) => {
     const { announcementNotification, announcement, notification } = useContext(NotificationContext);
     const { selectedDate, setSelectedDate, appointments } = useContext(AppointmentContext);
     const freeAppointments = appointments.filter(app => app.type_of_reservation === 0);
