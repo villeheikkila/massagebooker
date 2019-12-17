@@ -11,9 +11,6 @@ const EMAIL_SUFFIX = process.env.EMAIL_SUFFIX
 const INITIAL_ADMIN = process.env.INITIAL_ADMIN
 const EMAIL_WHITELIST = process.env.EMAIL_WHITELIST
 
-
-
-
 module.exports = {
   MONGODB_URI,
   PORT,

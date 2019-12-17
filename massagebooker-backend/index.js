@@ -9,6 +9,4 @@ const { generateAppointments } = require('./utils/timer')
  */
 if (process.argv.length !== 0 && process.argv[2] === 'init') generateAppointments()
 
-server.listen(config.PORT, () => {
-  console.log(`Server running on port ${config.PORT}`)
-})
+server.listen(config.PORT, () => console.log(`Server running on port ${config.PORT}`))
