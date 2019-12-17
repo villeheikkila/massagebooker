@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { NotificationContext } from '../../App';
 import { useField } from '../../hooks/useField';
+import { announcementNotification } from '../../utils';
 import { Notification } from '../Notification';
 import { UserList } from './UserList';
 
 export const DashBoard = () => {
-    const { announcementService, notification, announcementNotification } = useContext(NotificationContext);
+    const { announcementService, notification, announcement } = useContext(NotificationContext);
     const editedAnnouncement = useField('');
 
     const changeAnnouncement = event => {
@@ -22,7 +23,7 @@ export const DashBoard = () => {
                 </div>
             )}
 
-            <Notification notification={announcementNotification} />
+            <Notification notification={announcementNotification(announcement)} />
             <h2 className="dashboard_announcement_labels">Set Announcement</h2>
             <p className="dashboard_announcement_labels">Making an empty announcement clears the announcement</p>
             <form className="dashboard_form" onSubmit={changeAnnouncement}>

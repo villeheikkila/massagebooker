@@ -3,12 +3,13 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { NotificationContext, UserContext } from '../../App';
 import { useField } from '../../hooks/useField';
+import { announcementNotification } from '../../utils';
 import { Notification } from '../Notification';
 import { OwnAppointments } from './OwnAppointments';
 
 export const MyPage = () => {
     const { user, setUser, userService } = useContext(UserContext);
-    const { createNotification, notification, announcementNotification } = useContext(NotificationContext);
+    const { createNotification, notification, announcement } = useContext(NotificationContext);
     const numberField = useField('text');
 
     useEffect(() => {
@@ -63,7 +64,7 @@ export const MyPage = () => {
                 {notification ? (
                     <Notification notification={notification} />
                 ) : (
-                    <Notification notification={announcementNotification} />
+                    <Notification notification={announcementNotification(announcement)} />
                 )}
                 <div className="mypage_wrapper">
                     <div className="own_info">

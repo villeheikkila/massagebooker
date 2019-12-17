@@ -26,28 +26,28 @@ export const Stats = () => {
                 <ol>
                     <hr />
                     <li>
-                        <a>
+                        <p>
                             {` ${((numberOfUnusedPastAppointments / numberOfPastAppointments) * 100).toFixed(
                                 1,
                             )} % of possible appointments went unused`}{' '}
-                        </a>
+                        </p>
                     </li>
 
                     <li>
-                        <a>{`Number of users ${numberOfUsers}`}</a>
+                        <p>{`Number of users ${numberOfUsers}`}</p>
                     </li>
                     <li>
-                        <a>{`Number of users who have used massages ${usersWhoHaveUsedMassage}`}</a>
+                        <p>{`Number of users who have used massages ${usersWhoHaveUsedMassage}`}</p>
                     </li>
                     <li>
-                        <a>{`Number of appointments needed per week if all active users fully utilize their massages ${usersWhoHaveUsedMassage /
-                            2} (users who have made appointments are considered active)`}</a>
+                        <p>{`Number of appointments needed per week if all active users fully utilize their massages ${usersWhoHaveUsedMassage /
+                            2} (users who have made appointments are considered active)`}</p>
                     </li>
                     <li>
-                        <a>{`Average appointments per user ${(totalAppointmentsUsed / numberOfUsers).toFixed(2)}`}</a>
+                        <p>{`Average appointments per user ${(totalAppointmentsUsed / numberOfUsers).toFixed(2)}`}</p>
                     </li>
                     <li>
-                        <a>{`Most appointments by single user  ${mostAppointmentsBySingleUser}`}</a>
+                        <p>{`Most appointments by single user  ${mostAppointmentsBySingleUser}`}</p>
                     </li>
                 </ol>
             </div>

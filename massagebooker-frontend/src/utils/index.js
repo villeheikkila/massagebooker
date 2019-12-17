@@ -1,4 +1,7 @@
 /* helper for correcting timezone offset*/
+import * as icons from '../types/fa-icons';
+import * as types from '../types/types';
+
 export const formatStartDate = date => {
     date = new Date(date);
     const minutes = date.getMinutes();
@@ -42,6 +45,14 @@ export const getStartDate = date => {
     const time = dateObject.getTimezoneOffset();
     dateObject.setMinutes(minutes + time);
     return dateObject;
+};
+
+export const announcementNotification = announcement => {
+    return {
+        message: announcement ? announcement.message : '',
+        type: types.GENERAL,
+        icon: icons.GENERAL,
+    };
 };
 
 export const weekdays = {

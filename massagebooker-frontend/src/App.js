@@ -28,12 +28,6 @@ export const App = () => {
         }, length * 1000 || 3500);
     };
 
-    const announcementNotification = {
-        message: announcement ? announcement.message : '',
-        type: types.GENERAL,
-        icon: icons.GENERAL,
-    };
-
     useEffect(() => {
         axios.get('/api/users/current_user').then(response => setUser(response.data));
     }, []);
@@ -58,7 +52,6 @@ export const App = () => {
                     createNotification,
                     announcementService,
                     announcement,
-                    announcementNotification,
                     notification,
                 }}
             >

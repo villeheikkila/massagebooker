@@ -32,7 +32,7 @@ export const DatePickerForm = () => {
         const dateObject = new Date(startDate);
 
         // Fix situations like 10:05 where notification would display 10:5
-        const minuteAddition = dateObject.getMinutes() < 10 ? (minuteAddition += '0') : '';
+        const minuteAddition = dateObject.getMinutes() < 10 ? '0' : '';
 
         confirmAlert({
             message: `Are you sure you want to disable two appointments beginning on ${dateObject.getHours()}:${minuteAddition}${dateObject.getMinutes()} on ${dateObject.toDateString()} to accommodate for the stretching session? `,

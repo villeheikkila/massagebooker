@@ -2,12 +2,13 @@ import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { AppointmentContext, NotificationContext } from '../../App';
+import { announcementNotification } from '../../utils';
 import { AllAppointments } from '../AllAppointments';
 import { NextAppointment } from '../NextAppointment';
 import { Notification } from '../Notification';
 
 export const Index = ({ user }) => {
-    const { announcementNotification, announcement, notification } = useContext(NotificationContext);
+    const { announcement, notification } = useContext(NotificationContext);
     const { selectedDate, setSelectedDate, appointments } = useContext(AppointmentContext);
     const freeAppointments = appointments.filter(app => app.type_of_reservation === 0);
     const [width, setWidth] = useState(window.innerWidth);
@@ -41,7 +42,7 @@ export const Index = ({ user }) => {
                 <NextAppointment user={user} appointments={appointments} />
             )}
 
-            {isMobile && <Notification notification={announcementNotification} />}
+            {isMobile && <Notification notification={announcementNotification(announcement)} />}
             {isMobile && (
                 <div className="index_notification_container">
                     <Notification notification={notification} />
