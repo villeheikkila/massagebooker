@@ -146,6 +146,7 @@ appointmentsRouter.put('/:id/add', verify.verifyIfAdmin, async (req, res, next) 
  * Removes appointments that matches the date given as parameter.
  */
 appointmentsRouter.put('/:date/removeDate', verify.verifyIfAdmin, async (req, res, next) => {
+    console.log('TCL: req', req);
     try {
         const date = new Date(req.params.date);
 
@@ -160,10 +161,12 @@ appointmentsRouter.put('/:date/removeDate', verify.verifyIfAdmin, async (req, re
                 appoint.start_date.getYear() === year,
         );
 
-        const updatedAppointments = appointmentsToRemove.reduce(async (updated, appoint) => {
-            const updatedAppointment = await appointmentUtil.removeAppointment(appoint);
-            updated.push(updatedAppointment);
-        }, []);
+        const updatedAppointments = [];
+
+        for (const appointment of appointmentsToRemove) {
+            const updatedAppointment = await appointmentUtil.removeAppointment(appointment);
+            updatedAppointments.push(updatedAppointment);
+        }
 
         res.json(updatedAppointments.map(formatAppointment));
     } catch (exception) {
@@ -189,11 +192,13 @@ appointmentsRouter.put('/:date/addDate', verify.verifyIfAdmin, async (req, res, 
             },
         });
 
-        const updatedAppointments = appointments.reduce(async (updated, appointment) => {
+        const updatedAppointments = [];
+
+        for (let appointment of appointments) {
             appointment.type_of_reservation = 0;
             const updatedAppointment = await Appointment.findByIdAndUpdate(appointment._id, appointment, { new: true });
-            updated.push(updatedAppointment);
-        }, []);
+            updatedAppointments.push(updatedAppointment);
+        }
 
         res.json(updatedAppointments.map(formatAppointment));
     } catch (exception) {
