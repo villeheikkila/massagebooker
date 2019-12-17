@@ -24,7 +24,6 @@ const moreThanOneAppointmentInTwoWeeks = (usersPreviousMassageTimes, appointment
   return usersPreviousMassageTimesTwoWeeks.length === 0
 }
 
-
 const userAllowedToMakeAppointment = async (usersAppointmentList, appointment) => {
   try {
     const usersPreviousMassageTimes = usersAppointmentList.map(app => app.start_date)

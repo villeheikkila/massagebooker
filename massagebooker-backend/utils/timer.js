@@ -1,5 +1,6 @@
 const generator = require('./appointmentGenerator')
 const Appointment = require('../models/appointment')
+const logger = require('./logger')
 
 /**
    * Loops 5 and 3 weeks from (and including) the same week as the date given as a parameter.
@@ -9,7 +10,7 @@ const Appointment = require('../models/appointment')
    */
 const nextSixMonths = (date) => {
   for (let i = 0; i < 168; i += 7) {
-    let newDate = new Date(date)
+    const newDate = new Date(date)
     pickDays(new Date(newDate.setDate(date.getDate() + i)))
   }
 }
@@ -19,8 +20,8 @@ const nextSixMonths = (date) => {
    * @param {*} date represents the week.
    */
 const pickDays = async (date) => {
-  let monday = setDay(1, new Date(date))
-  let tuesday = setDay(2, new Date(date))
+  const monday = setDay(1, new Date(date))
+  const tuesday = setDay(2, new Date(date))
   await ifNotInDBCreateDay(new Date(monday))
   await ifNotInDBCreateDay(new Date(tuesday))
 }
@@ -47,13 +48,11 @@ const setDay = (day, date) => {
    */
 const ifNotInDBCreateDay = async (date) => {
   date = formatTime(new Date(date))
-  let checkup = new Date(date).setMinutes(475)
-  let doesDayHaveAppointments = await Appointment.find({ end_date: checkup })
-  if (doesDayHaveAppointments.length === 0 && date.toISOString().includes('08:55:00')) {
-    await generator.generateAppointmentsForDay(new Date(date))
-  } else {
-    console.log('day has appointments in database or time is formatted wrong', date, ' checkup date: ', checkup)
-  }
+  const checkup = new Date(date).setMinutes(475)
+  const doesDayHaveAppointments = await Appointment.find({ end_date: checkup })
+
+  if (doesDayHaveAppointments.length === 0 && date.toISOString().includes('08:55:00')) await generator.generateAppointmentsForDay(new Date(date))
+  else logger.info(`Day has appointments in database or time is formatted wrong ${date} checkup date: ${checkup}`)
 }
 
 /**
@@ -68,8 +67,8 @@ const formatTime = (date) => {
 const generateAppointments = async () => {
   try {
     await nextSixMonths(new Date)
-  } catch (exception) {
-    console.log('exception: ', exception)
+  } catch (error) {
+    logger.error('exception: ', error.message)
   }
 }
 
