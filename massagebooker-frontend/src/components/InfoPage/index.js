@@ -38,12 +38,12 @@ const InFoPage = ({ info, infoService }) => {
                     </ul>
                 </div>
                 <div>
-                    {announcement && announcement.message ? (
+                    {announcement && announcement.message && (
                         <div className="index_notice">
                             <h2>Notice</h2>
                             <p>{announcement.message}</p>
                         </div>
-                    ) : null}
+                    )}
                 </div>
             </div>
         )

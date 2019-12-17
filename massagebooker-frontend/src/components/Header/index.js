@@ -71,7 +71,7 @@ const Header = ({ user }) => {
     if (user) {
         return <AuthHeader user={user} />;
     }
-    return null;
+    return <></>;
 };
 
 export default Header;

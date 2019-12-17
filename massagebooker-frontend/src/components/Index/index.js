@@ -109,12 +109,12 @@ const Index = ({ user }) => {
                         tileDisabled={({ date, view }) => titleDisabled(date, view)}
                         showNeighboringMonth={false}
                     />
-                    {!isMobile && announcement && announcement.message ? (
+                    {!isMobile && announcement && announcement.message && (
                         <div className="index_notice">
                             <h2>Notice</h2>
                             <p>{announcement.message}</p>
                         </div>
-                    ) : null}
+                    )}
                 </div>
 
                 <div>

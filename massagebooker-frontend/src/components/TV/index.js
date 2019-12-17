@@ -22,9 +22,7 @@ const TV = () => {
 
     const announcement = tv.pop();
 
-    if (announcement === undefined) {
-        return null;
-    }
+    if (!announcement) return <></>;
 
     // Find next appointment
     const comingAppointments = tv.filter(app => {

@@ -12,9 +12,9 @@ const Display = ({ dateobject, user, ownPage, free, removed, cancel }) => {
     const minuteString = date.getMinutes() < 10 ? `0${minutes}` : minutes;
     const dateString = `${dayString}.${monthString}.${date.getFullYear()}`;
 
-    const clickCancel = cancel ? <span id="cancel_text">Click to cancel</span> : null;
-    const userDisplay = user ? user.name : free ? <span>Free</span> : null;
-    const remove = removed ? <span>Removed</span> : null;
+    const clickCancel = cancel ? <span id="cancel_text">Click to cancel</span> : <></>;
+    const userDisplay = user ? user.name : free ? <span>Free</span> : <></>;
+    const remove = removed ? <span>Removed</span> : <></>;
 
     return (
         <h4 className="own_appointment">
