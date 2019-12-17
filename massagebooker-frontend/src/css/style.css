@@ -1561,7 +1561,7 @@ hr {
     margin: 0 0 0 2em;
 }
 
-.statsWrapper a {
+.statsWrapper p {
     position: relative;
     display: block;
     padding: 0.42em 0.4em 0.4em 2em;
@@ -1574,7 +1574,7 @@ hr {
     border-radius: 0.3em;
 }
 
-.statsWrapper a:before {
+.statsWrapper p:before {
     content: counter(li);
     counter-increment: li;
     position: absolute;

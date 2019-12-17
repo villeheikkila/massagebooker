@@ -14,9 +14,7 @@ export const InfoPage = () => {
         infoService.getAll();
     }, []);
 
-    if (!user || !info[0]) return <h2>Loading...</h2>;
-
-    const { _id, header, content } = info[0];
+    if (!user || !info) return <h2>Loading...</h2>;
 
     return (
         <div className="infoPage">
@@ -24,19 +22,21 @@ export const InfoPage = () => {
             {user.admin && <CreateInfoItem infoService={infoService} createNotification={createNotification} />}
             <div>
                 <ul>
-                    <>
-                        <li className="infoItem">
-                            <h2>{header}</h2>
-                            <div>{content}</div>
-                        </li>
-                        {user.admin && (
-                            <DeleteInfoItem
-                                id={_id}
-                                infoService={infoService}
-                                createNotification={createNotification}
-                            />
-                        )}
-                    </>
+                    {info.map(element => (
+                        <>
+                            <li className="infoItem">
+                                <h2>{element.header}</h2>
+                                <div>{element.content}</div>
+                            </li>
+                            {user.admin && (
+                                <DeleteInfoItem
+                                    id={element._id}
+                                    infoService={infoService}
+                                    createNotification={createNotification}
+                                />
+                            )}
+                        </>
+                    ))}
                 </ul>
             </div>
             <div>

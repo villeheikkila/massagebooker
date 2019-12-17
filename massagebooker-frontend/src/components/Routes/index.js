@@ -11,7 +11,7 @@ import { StretchAppointmentDisplay } from '../StretchingSessions';
 import { TV } from '../TV';
 
 export const Routes = ({ user }) => {
-    if (!user) {
+    if (!user)
         return (
             <Router>
                 <Switch>
@@ -21,22 +21,21 @@ export const Routes = ({ user }) => {
                 </Switch>
             </Router>
         );
-    } else {
-        return (
-            <>
-                <Router>
-                    <Header user={user} />
-                    <div>
-                        <Route exact path="/" render={() => <Index user={user} />} />
-                        <Route exact path="/stretching" render={() => <StretchAppointmentDisplay />} />
-                        <Route exact path="/dashboard" render={() => <DashBoard />} />
-                        <Route exact path="/mypage" render={() => <MyPage />} />
-                        <Route exact path="/stats" render={() => <Stats />} />
-                        <Route exact path="/tv" render={() => <TV />} />
-                        <Route exact path="/info" render={() => <InfoPage />} />
-                    </div>
-                </Router>
-            </>
-        );
-    }
+
+    return (
+        <>
+            <Router>
+                <Header user={user} />
+                <div>
+                    <Route exact path="/" render={() => <Index user={user} />} />
+                    <Route exact path="/stretching" render={() => <StretchAppointmentDisplay />} />
+                    <Route exact path="/dashboard" render={() => <DashBoard />} />
+                    <Route exact path="/mypage" render={() => <MyPage />} />
+                    <Route exact path="/stats" render={() => <Stats />} />
+                    <Route exact path="/tv" render={() => <TV />} />
+                    <Route exact path="/info" render={() => <InfoPage />} />
+                </div>
+            </Router>
+        </>
+    );
 };
