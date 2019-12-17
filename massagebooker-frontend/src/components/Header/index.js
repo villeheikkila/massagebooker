@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../pics/unity5.png';
 
@@ -40,8 +40,8 @@ const AuthHeader = ({ user }) => {
                         Stretching
                     </Link>
                 </li>
-                {user.admin === true ? (
-                    <Fragment>
+                {user.admin && (
+                    <>
                         <li>
                             <Link className="nav-link" to="/dashboard">
                                 Admin dashboard
@@ -53,8 +53,8 @@ const AuthHeader = ({ user }) => {
                                 Statistics
                             </Link>
                         </li>
-                    </Fragment>
-                ) : null}
+                    </>
+                )}
                 <li>
                     <i
                         onClick={() => (window.location.href = '/auth/logout')}

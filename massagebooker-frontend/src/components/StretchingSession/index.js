@@ -1,20 +1,16 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NotificationContext, StretchContext } from '../../App';
 import useField from '../../hooks/useField';
 
-const StretchingSessionUser = props => {
-    const { data, description } = props;
-    return (
-        <li>
-            <b>{data.name}:</b>
-            <br />
-            <i id="description">{description}</i>
-        </li>
-    );
-};
+const StretchingSessionUser = ({ data, description }) => (
+    <li>
+        <b>{data.name}:</b>
+        <br />
+        <i id="description">{description}</i>
+    </li>
+);
 
-const SingleStretchingSession = props => {
-    const { date, users, sessionID, currentUsersStretchAppointments, userIsAdmin } = props;
+const SingleStretchingSession = ({ date, users, sessionID, currentUsersStretchAppointments, userIsAdmin }) => {
     const [visibility, setVisibility] = useState('none');
 
     const toggleVisibility = () => {
@@ -61,8 +57,7 @@ const SingleStretchingSession = props => {
     );
 };
 
-const JoinStretchAppointment = props => {
-    const { sessionID } = props;
+const JoinStretchAppointment = ({ sessionID }) => {
     const { stretchingService } = useContext(StretchContext);
     const { createNotification } = useContext(NotificationContext);
     const description = useField('text');
@@ -82,8 +77,7 @@ const JoinStretchAppointment = props => {
     );
 };
 
-const CancelStretchAppointment = props => {
-    const { sessionID } = props;
+const CancelStretchAppointment = ({ sessionID }) => {
     const { stretchingService } = useContext(StretchContext);
     const { createNotification } = useContext(NotificationContext);
 
@@ -104,8 +98,7 @@ const CancelStretchAppointment = props => {
     );
 };
 
-const DeleteStretchSession = props => {
-    const { date, sessionID } = props;
+const DeleteStretchSession = ({ date, sessionID }) => {
     const { stretchingService } = useContext(StretchContext);
     const { createNotification } = useContext(NotificationContext);
 
@@ -136,8 +129,7 @@ const DeleteStretchSession = props => {
     );
 };
 
-const Modal = props => {
-    const { joinSession, description } = props;
+const Modal = ({ joinSession, description }) => {
     const [open, setOpen] = useState(false);
 
     const handleClose = func => {
@@ -146,7 +138,7 @@ const Modal = props => {
     };
 
     return (
-        <Fragment>
+        <>
             {!open && (
                 <button className="join_button" onClick={() => setOpen(true)}>
                     Join
@@ -172,7 +164,7 @@ const Modal = props => {
                     </div>
                 </div>
             )}
-        </Fragment>
+        </>
     );
 };
 

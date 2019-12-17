@@ -3,8 +3,7 @@ import { NotificationContext, UserContext } from '../../App';
 import useField from '../../hooks/useField';
 import Notification from '../Notification';
 
-const InFoPage = props => {
-    const { info, infoService } = props;
+const InFoPage = ({ info, infoService }) => {
     const { user } = useContext(UserContext);
     const [loaded, setLoaded] = useState(false);
     const { announcement, notification, createNotification } = useContext(NotificationContext);
@@ -51,10 +50,9 @@ const InFoPage = props => {
     );
 };
 
-const CreateInfoItem = props => {
-    const { infoService, createNotification } = props;
-    let contentField = useField('');
-    let headerField = useField('');
+const CreateInfoItem = ({ infoService, createNotification }) => {
+    const contentField = useField('');
+    const headerField = useField('');
 
     const createInfoItem = async event => {
         if (contentField.value === '') {
@@ -102,20 +100,14 @@ const CreateInfoItem = props => {
     );
 };
 
-const InfoItem = props => {
-    const { header, content } = props;
+const InfoItem = ({ header, content }) => (
+    <li className="infoItem">
+        <h2>{header}</h2>
+        <div>{content}</div>
+    </li>
+);
 
-    return (
-        <li className="infoItem">
-            <h2>{header}</h2>
-            <div>{content}</div>
-        </li>
-    );
-};
-
-const DeleteInfoItem = props => {
-    const { id, infoService, createNotification } = props;
-
+const DeleteInfoItem = ({ id, infoService, createNotification }) => {
     const deleteItem = async () => {
         try {
             await infoService.remove(id);

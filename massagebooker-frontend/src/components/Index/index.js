@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { AppointmentContext, NotificationContext } from '../../App';
 import AllAppointments from '../AllAppointments';
@@ -77,7 +77,7 @@ const Index = ({ user }) => {
     let now = moment();
 
     return (
-        <Fragment>
+        <>
             {notification && !isMobile ? (
                 <Notification notification={notification} />
             ) : (
@@ -122,7 +122,7 @@ const Index = ({ user }) => {
                     <AllAppointments />
                 </div>
             </div>
-        </Fragment>
+        </>
     );
 };
 

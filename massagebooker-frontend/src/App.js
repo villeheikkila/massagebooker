@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import React, { createContext, Fragment, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import DashBoard from './components/Dashboard';
 import Header from './components/Header';
@@ -27,25 +27,22 @@ const App = () => {
     const [selectedDate, setSelectedDate] = useState(null);
 
     const createNotification = (message, type, length) => {
-        let icon;
-        let messageType;
-        if (type === types.SUCCESS) {
-            icon = icons.SUCCESS;
-            messageType = types.SUCCESS;
-        } else {
-            icon = icons.ERROR;
-            messageType = types.ERROR;
-        }
-        const notification = {
-            message: message,
-            icon: icon,
-            type: messageType,
-        };
+        const notification =
+            type === types.SUCCESS
+                ? { message, icon: icons.SUCCESS, messageType: types.SUCCESS }
+                : { message, icon: icons.ERROR, messageType: types.ERROR };
+
         setNotification(notification);
 
         setTimeout(() => {
             setNotification(null);
         }, length * 1000 || 3500);
+    };
+
+    const announcementNotification = {
+        message: announcement ? announcement.message : '',
+        type: types.GENERAL,
+        icon: icons.GENERAL,
     };
 
     useEffect(() => {
@@ -54,8 +51,8 @@ const App = () => {
 
     useEffect(() => {
         userService.getAll();
-        let twoWeeksAgo = moment().subtract(15, 'days');
-        let sixWeeksFromNow = moment().add(43, 'days');
+        const twoWeeksAgo = moment().subtract(15, 'days');
+        const sixWeeksFromNow = moment().add(43, 'days');
         appointmentService.getInterval(twoWeeksAgo, sixWeeksFromNow);
         statsService.getAll();
         stretchingService.getAll();
@@ -67,11 +64,6 @@ const App = () => {
         user && userService.getOne(user._id).then(refreshedUser => setUser(refreshedUser));
     }, [appointments, stretching]);
 
-    const announcementNotification = {
-        message: announcement ? announcement.message : '',
-        type: types.GENERAL,
-        icon: icons.GENERAL,
-    };
     if (!user) {
         return (
             <Router>
@@ -84,7 +76,7 @@ const App = () => {
         );
     } else {
         return (
-            <Fragment>
+            <>
                 <Router>
                     <Header user={user} />
                     <div>
@@ -125,7 +117,7 @@ const App = () => {
                         </NotificationContext.Provider>
                     </div>
                 </Router>
-            </Fragment>
+            </>
         );
     }
 };

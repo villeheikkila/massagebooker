@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 const Stats = ({ stats }) => {
     let numberOfUnusedPastAppointments = stats.numberOfUnusedPastAppointments;
@@ -9,7 +9,7 @@ const Stats = ({ stats }) => {
     let usersWhoHaveUsedMassage = stats.usersWhoHaveUsedMassage;
 
     return (
-        <Fragment>
+        <>
             <div className="statsWrapper">
                 <h1>Statistics</h1>
                 <ol>
@@ -40,7 +40,7 @@ const Stats = ({ stats }) => {
                     </li>
                 </ol>
             </div>
-        </Fragment>
+        </>
     );
 };
 
