@@ -27,10 +27,10 @@ const SingleStretchingSession = ({ date, users, sessionID, currentUsersStretchAp
             <div className="stretching_time">{prettyDateString(date)} </div>
             <h2 className="stretching_header_time" onClick={() => toggleVisibility()}>
                 Attendees &nbsp;{' '}
-                {visibility === null ? (
-                    <i id="up_arrow" className="fas fa-chevron-up"></i>
-                ) : (
+                {visibility ? (
                     <i id="down_arrow" className="fas fa-chevron-down"></i>
+                ) : (
+                    <i id="up_arrow" className="fas fa-chevron-up"></i>
                 )}
             </h2>
 
@@ -169,23 +169,21 @@ const Modal = ({ joinSession, description }) => {
 };
 
 const prettyDateString = dateToPretify => {
-    let date = new Date(dateToPretify);
+    const date = new Date(dateToPretify);
 
-    // fix timezone offset
-    let minutes = date.getMinutes();
-    let time = date.getTimezoneOffset();
+    // Fix timezone offset
+    const minutes = date.getMinutes();
+    const time = date.getTimezoneOffset();
     date.setMinutes(minutes + time);
 
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let hours = date.getHours();
-    minutes = date.getMinutes();
-    if (minutes < 10) {
-        minutes = `0${minutes}`;
-    }
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutesFixed = date.getMinutes();
+    const minutesString = minutesFixed < 10 ? `0${minutesFixed}` : minutesFixed;
 
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
+    return `${day}.${month}.${year} ${hours}:${minutesString}`;
 };
 
 export default SingleStretchingSession;

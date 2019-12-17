@@ -29,13 +29,14 @@ const DatePickerForm = () => {
         if (!isMondayOrTuesday(startDate)) return;
 
         let minuteAddition = '';
+        const dateObject = new Date(startDate);
         // Fix situations like 10:05 where notification would display 10:5
-        if (startDate.getMinutes() < 10) {
+        if (dateObject.getMinutes() < 10) {
             minuteAddition += '0';
         }
 
         confirmAlert({
-            message: `Are you sure you want to disable two appointments beginning on ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} on ${startDate.toDateString()} to accommodate for the stretching session? `,
+            message: `Are you sure you want to disable two appointments beginning on ${dateObject.getHours()}:${minuteAddition}${dateObject.getMinutes()} on ${dateObject.toDateString()} to accommodate for the stretching session? `,
             buttons: [
                 {
                     label: 'Yes',
@@ -44,7 +45,7 @@ const DatePickerForm = () => {
                             await stretchingService.create({ date: startDate });
 
                             createNotification(
-                                `Successfully created a stretching session on ${startDate.toDateString()}! Two appointments beginning from ${startDate.getHours()}:${minuteAddition}${startDate.getMinutes()} have been disabled to accommodate`,
+                                `Successfully created a stretching session on ${dateObject.toDateString()}! Two appointments beginning from ${dateObject.getHours()}:${minuteAddition}${dateObject.getMinutes()} have been disabled to accommodate`,
                                 'success',
                                 8,
                             );
