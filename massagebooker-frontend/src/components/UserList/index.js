@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
-import User from '../User/User';
+import User from '../User';
 
 const UserList = () => {
     const { users } = useContext(UserContext);

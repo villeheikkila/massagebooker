@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useContext } from 'react';
 import { AppointmentContext, UserContext } from '../../App';
 import formatStartDate from '../../utils/formatStartDate';
-import Appointment from '../Appoinment/Appointment';
+import Appointment from '../Appoinment';
 
 const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
     const { appointments } = useContext(AppointmentContext);

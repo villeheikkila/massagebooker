@@ -3,10 +3,10 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 //import Calendar from 'react-calendar';
 import Calendar from 'react-calendar';
 import { AppointmentContext, NotificationContext, UserContext } from '../../App';
-import AllAppointments from '../AllAppointments/AllAppointments';
-import LoginIndex from '../LoginIndex/LoginIndex';
-import NextAppointment from '../NextAppointment/NextAppointment';
-import Notification from '../Notification/Notification';
+import AllAppointments from '../AllAppointments';
+import LoginIndex from '../LoginIndex';
+import NextAppointment from '../NextAppointment';
+import Notification from '../Notification';
 
 const Index = () => {
     const { user } = useContext(UserContext);

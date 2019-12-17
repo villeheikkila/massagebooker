@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useContext } from 'react';
 import { AppointmentContext, NotificationContext, UserContext } from '../../App';
-import Display from '../Display/Display';
+import Display from '../Display';
 
 const CreateAppointment = ({ id, start_date }) => {
     const { user } = useContext(UserContext);

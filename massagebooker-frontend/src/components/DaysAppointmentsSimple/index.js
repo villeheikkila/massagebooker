@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import formatStartDate from '../../utils/formatStartDate';
-import SimpleAppointment from '../SimpleAppointment/SimpleAppointment';
+import SimpleAppointment from '../SimpleAppointment';
 
 const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointments }) => {
     const now = moment();

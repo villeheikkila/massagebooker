@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AppointmentContext, NotificationContext, UserContext } from '../../App';
-import CreateAppointment from '../CreateAppointment/CreateAppointment';
-import Display from '../Display/Display';
+import CreateAppointment from '../CreateAppointment';
+import Display from '../Display';
 
 const Appointment = props => {
     const { appointmentService } = useContext(AppointmentContext);

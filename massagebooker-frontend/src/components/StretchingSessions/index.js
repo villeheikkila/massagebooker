@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NotificationContext, StretchContext, UserContext } from '../../App';
-import DatePickerForm from '../DatePickerForm/DatePickerForm';
-import Notification from '../Notification/Notification';
-import SingleStretchingSession from '../StretchingSession/StretchingSession';
+import DatePickerForm from '../DatePickerForm';
+import Notification from '../Notification';
+import SingleStretchingSession from '../StretchingSession';
 
 const StretchAppointmentDisplay = () => {
     const { stretching } = useContext(StretchContext);

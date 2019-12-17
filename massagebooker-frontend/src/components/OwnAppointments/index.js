@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { AppointmentContext, UserContext } from '../../App';
-import Appointment from '../Appoinment/Appointment';
+import Appointment from '../Appoinment';
 
 const OwnAppointments = ({ ownPage }) => {
     const { appointments } = useContext(AppointmentContext);

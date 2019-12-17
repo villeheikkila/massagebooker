@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { NotificationContext } from '../../App';
 import useField from '../../hooks/useField';
-import Notification from '../Notification/Notification';
-import UserList from '../UserList/UserList';
+import Notification from '../Notification';
+import UserList from '../UserList';
 
 const DashBoard = () => {
     const { announcementService, notification, announcementNotification } = useContext(NotificationContext);

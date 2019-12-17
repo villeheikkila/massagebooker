@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import useResource from '../../hooks/useResource';
 import unity4 from '../../pics/unity4.png';
 import formatStartDate from '../../utils/formatStartDate';
-import Clock from '../Clock/Clock';
-import DaysAppointmentsSimple from '../DaysAppointmentsSimple/DaysAppointmentsSimple';
-import SimpleAppointment from '../SimpleAppointment/SimpleAppointment';
+import Clock from '../Clock';
+import DaysAppointmentsSimple from '../DaysAppointmentsSimple';
+import SimpleAppointment from '../SimpleAppointment';
 
 const TV = () => {
     const [tv, tvService] = useResource('/api/tv');

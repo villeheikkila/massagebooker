@@ -1,5 +1,5 @@
 import React from 'react';
-import Display from '../Display/Display';
+import Display from '../Display';
 
 const SimpleAppointment = props => {
     const { start_date, type_of_reservation, appUser } = props;

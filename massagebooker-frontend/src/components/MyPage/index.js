@@ -3,8 +3,8 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { NotificationContext, UserContext } from '../../App';
 import useField from '../../hooks/useField';
-import Notification from '../Notification/Notification';
-import OwnAppointments from '../OwnAppointments/OwnAppointments';
+import Notification from '../Notification';
+import OwnAppointments from '../OwnAppointments';
 
 const MyPage = () => {
     const { user, setUser, userService } = useContext(UserContext);

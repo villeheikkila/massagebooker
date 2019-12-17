@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NotificationContext, UserContext } from '../../App';
 import useField from '../../hooks/useField';
-import Notification from '../Notification/Notification';
+import Notification from '../Notification';
 
 const InFoPage = props => {
     const { info, infoService } = props;
