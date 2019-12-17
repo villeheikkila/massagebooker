@@ -2,8 +2,8 @@ import React from 'react';
 
 const SimpleAppointment = ({ app }) => {
     const date = new Date(app.start_date);
-    let minutes = date.getMinutes();
-    let time = date.getTimezoneOffset();
+    const minutes = date.getMinutes();
+    const time = date.getTimezoneOffset();
     date.setMinutes(minutes + time);
 
     const weekdays = {

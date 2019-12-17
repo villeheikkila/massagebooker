@@ -5,21 +5,18 @@ import SimpleAppointment from '../SimpleAppointment';
 
 const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointments }) => {
     const now = moment();
-    let day = null;
-    if (now.day() <= lastdayWithAppointments) {
-        day = moment()
-            .startOf('week')
-            .add(dayNumber, 'days'); // day on this week
-    } else {
-        day = moment()
-            .startOf('week')
-            .add(7 + dayNumber, 'days'); //day on next week
-    }
+    const day =
+        now.day() <= lastdayWithAppointments
+            ? moment()
+                  .startOf('week')
+                  .add(dayNumber, 'days')
+            : (day = moment()
+                  .startOf('week')
+                  .add(7 + dayNumber, 'days'));
 
-    // compares appointment time to selected date on calendar, filtering to only include selected days appointments
+    // Compares appointment time to selected date on calendar, filtering to only include selected days appointments
     const daysAppointments = appointments.filter(appointment => {
-        let appointmentsDate = moment(appointment.start_date);
-
+        const appointmentsDate = moment(appointment.start_date);
         return day.isSame(appointmentsDate, 'day');
     });
 
@@ -40,14 +37,14 @@ const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointmen
     };
 
     // NOTE: THIS ASSUMES 13 APPOINTMETS PER DAY; IF APPOINTMETS ARE EVER ADDED OR REMOVED THIS WILL BREAK
-
-    let firstHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() < 15);
-    let secondHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() > 14);
+    const firstHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() < 15);
+    const secondHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() > 14);
+    const dayHasNoAppointments = daysAppointments.filter(app => app.type_of_reservation !== 3).length === 0;
 
     return (
         <div>
             <h2 className="tv_view_day">{weekdays[dayNumber]}</h2>
-            {daysAppointments.filter(app => app.type_of_reservation !== 3).length === 0 ? (
+            {dayHasNoAppointments ? (
                 <div className="tv_view_header">
                     <h2>No massages on this day</h2>
                 </div>
@@ -66,19 +63,19 @@ const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointmen
                             );
                         })}
                     </ul>
+
                     <h5 className="tv_view_headers">Break</h5>
+
                     <ul className="tvViewAppointmentList">
-                        {secondHalf.map(app => {
-                            return (
-                                <SimpleAppointment
-                                    key={app._id}
-                                    id={app._id}
-                                    start_date={formatStartDate(app.start_date)}
-                                    type_of_reservation={app.type_of_reservation}
-                                    appUser={app.user}
-                                />
-                            );
-                        })}
+                        {secondHalf.map(app => (
+                            <SimpleAppointment
+                                key={app._id}
+                                id={app._id}
+                                start_date={formatStartDate(app.start_date)}
+                                type_of_reservation={app.type_of_reservation}
+                                appUser={app.user}
+                            />
+                        ))}
                     </ul>
                 </div>
             )}

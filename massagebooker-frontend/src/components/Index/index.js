@@ -8,7 +8,7 @@ import Notification from '../Notification';
 
 const titleClassName = (date, view, user, now, freeAppointments, selectedMoment) => {
     if (view === 'month') {
-        let dateMoment = moment(date);
+        const dateMoment = moment(date);
         if (dateMoment.isBefore(now, 'days') || dateMoment.day() > 2 || dateMoment.day() === 0) {
             return 'disabled';
         } else {

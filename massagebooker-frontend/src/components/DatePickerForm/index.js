@@ -76,7 +76,7 @@ const DatePickerForm = () => {
                     maxDate={addDays(new Date(), 120)}
                     minTime={new Date().setHours(8, 55, 0, 0)}
                     maxTime={new Date().setHours(15, 45, 0, 0)}
-                    //Dont let 11:15 or 16:20 since the lunch break is at 11:45 and 16:20 is the last appointment!
+                    // Don't let 11:15 or 16:20 since the lunch break is at 11:45 and 16:20 is the last appointment!
                     injectTimes={[
                         new Date().setHours(8, 55, 0, 0),
                         new Date().setHours(9, 30, 0, 0),

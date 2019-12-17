@@ -107,11 +107,8 @@ const DeleteStretchSession = ({ date, sessionID }) => {
             await stretchingService.remove(sessionID);
 
             const dateData = new Date(date);
-            let minuteAddition = '';
-            // Fix situations like 10:05 where notification would display 10:5
-            if (dateData.getMinutes() < 10) {
-                minuteAddition += '0';
-            }
+            const minuteAddition = dateData.getMinutes() < 10 ? '0' : '';
+
             createNotification(
                 `Reservation on ${dateData.toDateString()} has been removed successfully! Two appointments beginning from ${dateData.getUTCHours()}:${minuteAddition}${dateData.getMinutes()} have been restored!`,
                 'success',
@@ -154,6 +151,7 @@ const Modal = ({ joinSession, description }) => {
                             rows="3"
                         ></textarea>
                     </div>
+
                     <div>
                         <button onClick={() => setOpen(false)} className="modal_cancel_button">
                             Cancel
