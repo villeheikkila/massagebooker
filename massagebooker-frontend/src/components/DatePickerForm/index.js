@@ -16,6 +16,7 @@ const DatePickerForm = () => {
         if (date.getHours() === 0 && date.getMinutes() === 0) {
             date.setHours(8, 55, 0, 0);
         }
+
         setStartDate(date);
     };
 
@@ -26,14 +27,12 @@ const DatePickerForm = () => {
 
     const createStretch = async event => {
         event.preventDefault();
-        if (!isMondayOrTuesday(startDate)) return;
 
-        let minuteAddition = '';
+        if (!isMondayOrTuesday(startDate)) return;
         const dateObject = new Date(startDate);
+
         // Fix situations like 10:05 where notification would display 10:5
-        if (dateObject.getMinutes() < 10) {
-            minuteAddition += '0';
-        }
+        const minuteAddition = dateObject.getMinutes() < 10 ? (minuteAddition += '0') : '';
 
         confirmAlert({
             message: `Are you sure you want to disable two appointments beginning on ${dateObject.getHours()}:${minuteAddition}${dateObject.getMinutes()} on ${dateObject.toDateString()} to accommodate for the stretching session? `,
@@ -95,12 +94,12 @@ const DatePickerForm = () => {
                     onChange={handleChange}
                     filterDate={isMondayOrTuesday}
                 />
-                {startDate === undefined ? (
-                    <button disabled className="disabled_submit_button" type="submit">
+                {startDate ? (
+                    <button className="stretching_submit_button" type="submit">
                         Create
                     </button>
                 ) : (
-                    <button className="stretching_submit_button" type="submit">
+                    <button disabled className="disabled_submit_button" type="submit">
                         Create
                     </button>
                 )}

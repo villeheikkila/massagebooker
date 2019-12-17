@@ -7,23 +7,21 @@ import UserList from '../UserList';
 
 const DashBoard = () => {
     const { announcementService, notification, announcementNotification } = useContext(NotificationContext);
-    let editedAnnouncement = useField('');
+    const editedAnnouncement = useField('');
 
-    const changeAnnouncement = async event => {
+    const changeAnnouncement = event => {
         event.preventDefault();
-        const announcement = {
-            message: editedAnnouncement.value,
-        };
-        announcementService.createWithoutConcat(announcement);
+        announcementService.createWithoutConcat({ message: editedAnnouncement.value });
     };
 
     return (
         <div>
-            {notification ? (
+            {notification && (
                 <div className="dashboard_notification_container">
                     <Notification notification={notification} />
                 </div>
-            ) : null}
+            )}
+
             <Notification notification={announcementNotification} />
             <h2 className="dashboard_announcement_labels">Set Announcement</h2>
             <p className="dashboard_announcement_labels">Making an empty announcement clears the announcement</p>
@@ -36,6 +34,7 @@ const DashBoard = () => {
                 <br />
                 <button type="submit">Change</button>
             </form>
+
             <UserList />
         </div>
     );
