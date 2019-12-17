@@ -13,7 +13,7 @@ RUN cd /usr/src/app/massagebooker-frontend && npm run-script build
 WORKDIR /usr/src/app
 RUN mv ./massagebooker-frontend/build ./massagebooker-backend
 
-WORKDIR /usr/src/app/massagebooker
+WORKDIR /usr/src/app/massagebooker-backend
 RUN npm install
 
 CMD [ "npm", "start" ]
