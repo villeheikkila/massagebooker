@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { NotificationContext, StretchContext } from '../../App';
 
-const DatePickerForm = () => {
+export const DatePickerForm = () => {
     const [startDate, setStartDate] = useState(new Date().setHours(8, 55, 0, 0));
     const { stretchingService } = useContext(StretchContext);
     const { createNotification } = useContext(NotificationContext);
@@ -107,5 +107,3 @@ const DatePickerForm = () => {
         </div>
     );
 };
-
-export default DatePickerForm;

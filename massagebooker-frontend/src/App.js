@@ -1,12 +1,12 @@
 import axios from 'axios';
 import moment from 'moment';
 import React, { createContext, useEffect, useState } from 'react';
-import Routes from './components/Routes';
-import useResource from './hooks/useResource';
+import { Routes } from './components/Routes';
+import { useResource } from './hooks/useResource';
 import * as icons from './types/fa-icons';
 import * as types from './types/types';
 
-const App = () => {
+export const App = () => {
     const [users, userService] = useResource('/api/users');
     const [appointments, appointmentService] = useResource('/api/appointments');
     const [stretching, stretchingService] = useResource('/api/stretching');
@@ -85,4 +85,3 @@ export const NotificationContext = createContext({});
 export const AppointmentContext = createContext({});
 export const UserContext = createContext({});
 export const StretchContext = createContext({});
-export default App;

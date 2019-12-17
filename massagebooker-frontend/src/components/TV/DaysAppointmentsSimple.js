@@ -1,18 +1,18 @@
 import moment from 'moment';
 import React from 'react';
-import formatStartDate from '../../utils/formatStartDate';
-import SimpleAppointment from '../SimpleAppointment';
+import { formatStartDate, sortByStartDate, weekdays } from '../../utils';
+import { SimpleAppointment } from '../SimpleAppointment';
 
-const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointments }) => {
+export const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointments }) => {
     const now = moment();
     const day =
         now.day() <= lastdayWithAppointments
             ? moment()
                   .startOf('week')
                   .add(dayNumber, 'days')
-            : (day = moment()
+            : moment()
                   .startOf('week')
-                  .add(7 + dayNumber, 'days'));
+                  .add(7 + dayNumber, 'days');
 
     // Compares appointment time to selected date on calendar, filtering to only include selected days appointments
     const daysAppointments = appointments.filter(appointment => {
@@ -20,26 +20,12 @@ const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointmen
         return day.isSame(appointmentsDate, 'day');
     });
 
-    daysAppointments.sort((a, b) => {
-        const dateA = new Date(a.start_date);
-        const dateB = new Date(b.start_date);
-        return dateA - dateB;
-    });
-
-    const weekdays = {
-        0: 'Sunday',
-        1: 'Monday',
-        2: 'Tuesday',
-        3: 'Wednesday',
-        4: 'Thursday',
-        5: 'Friday',
-        6: 'Saturday',
-    };
+    const sortedDaysAppointments = sortByStartDate(daysAppointments);
 
     // NOTE: THIS ASSUMES 13 APPOINTMETS PER DAY; IF APPOINTMETS ARE EVER ADDED OR REMOVED THIS WILL BREAK
-    const firstHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() < 15);
-    const secondHalf = daysAppointments.filter(app => new Date(app.start_date).getHours() > 14);
-    const dayHasNoAppointments = daysAppointments.filter(app => app.type_of_reservation !== 3).length === 0;
+    const firstHalf = sortedDaysAppointments.filter(app => new Date(app.start_date).getHours() < 15);
+    const secondHalf = sortedDaysAppointments.filter(app => new Date(app.start_date).getHours() > 14);
+    const dayHasNoAppointments = sortedDaysAppointments.filter(app => app.type_of_reservation !== 3).length === 0;
 
     return (
         <div>
@@ -82,5 +68,3 @@ const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointmen
         </div>
     );
 };
-
-export default DaysAppointmentsSimple;

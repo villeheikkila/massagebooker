@@ -1,13 +1,13 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
-import useResource from '../../hooks/useResource';
+import { useResource } from '../../hooks/useResource';
 import unity4 from '../../pics/unity4.png';
-import formatStartDate from '../../utils/formatStartDate';
-import Clock from '../Clock';
-import DaysAppointmentsSimple from '../DaysAppointmentsSimple';
-import SimpleAppointment from '../SimpleAppointment';
+import { formatStartDate, sortByStartDate } from '../../utils';
+import { SimpleAppointment } from '../SimpleAppointment';
+import { Clock } from './Clock';
+import { DaysAppointmentsSimple } from './DaysAppointmentsSimple';
 
-const TV = () => {
+export const TV = () => {
     const [tv, tvService] = useResource('/api/tv');
     const now = moment();
 
@@ -30,14 +30,10 @@ const TV = () => {
         return appStartTime.isAfter(now);
     });
 
-    comingAppointments.sort((a, b) => {
-        const dateA = new Date(a.start_date);
-        const dateB = new Date(b.start_date);
-        return dateA - dateB;
-    });
+    const sortedCompingAppointments = sortByStartDate(comingAppointments);
 
-    const next = comingAppointments.filter(app => app.type_of_reservation !== 3)[0]
-        ? comingAppointments.filter(app => app.type_of_reservation !== 3)[0]
+    const next = sortedCompingAppointments.filter(app => app.type_of_reservation !== 3)[0]
+        ? sortedCompingAppointments.filter(app => app.type_of_reservation !== 3)[0]
         : null;
 
     return (
@@ -80,5 +76,3 @@ const TV = () => {
         </div>
     );
 };
-
-export default TV;

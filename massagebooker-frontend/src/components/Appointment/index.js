@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { AppointmentContext, NotificationContext, UserContext } from '../../App';
-import CreateAppointment from '../CreateAppointment';
-import Display from '../Display';
+import { CreateAppointment } from '../CreateAppointment';
+import { Display } from '../Display';
 
-const Appointment = ({ id, start_date, type_of_reservation, appUser, ownPage }) => {
+export const Appointment = ({ id, start_date, type_of_reservation, appUser, ownPage }) => {
     const { appointmentService } = useContext(AppointmentContext);
     const { user } = useContext(UserContext);
     const { createNotification } = useContext(NotificationContext);
@@ -62,5 +62,3 @@ const Appointment = ({ id, start_date, type_of_reservation, appUser, ownPage }) 
         </div>
     );
 };
-
-export default Appointment;

@@ -1,7 +1,7 @@
 import React from 'react';
-import Display from '../Display';
+import { Display } from '../Display';
 
-const SimpleAppointment = ({ start_date, type_of_reservation, appUser }) => (
+export const SimpleAppointment = ({ start_date, type_of_reservation, appUser }) => (
     <div className="cont">
         {type_of_reservation === 1 ? (
             <button id="reserved">
@@ -16,5 +16,3 @@ const SimpleAppointment = ({ start_date, type_of_reservation, appUser }) => (
         )}
     </div>
 );
-
-export default SimpleAppointment;

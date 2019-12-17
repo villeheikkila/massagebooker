@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import useResource from '../../hooks/useResource';
+import { useResource } from '../../hooks/useResource';
 
-const Stats = () => {
+export const Stats = () => {
     const [stats, statsService] = useResource('api/stats');
 
     useEffect(() => {
@@ -54,5 +54,3 @@ const Stats = () => {
         </>
     );
 };
-
-export default Stats;

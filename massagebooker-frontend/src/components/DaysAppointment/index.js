@@ -1,10 +1,10 @@
 import moment from 'moment';
 import React, { useContext } from 'react';
 import { AppointmentContext, UserContext } from '../../App';
-import formatStartDate from '../../utils/formatStartDate';
-import Appointment from '../Appoinment';
+import { formatStartDate, sortByStartDate, weekdays } from '../../utils';
+import { Appointment } from '../Appointment';
 
-const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
+export const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
     const { appointments } = useContext(AppointmentContext);
     const { users } = useContext(UserContext);
     const now = moment();
@@ -24,28 +24,12 @@ const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
         return day.isSame(appointmentsDate, 'day');
     });
 
-    daysAppointments.sort((a, b) => {
-        const dateA = new Date(a.start_date);
-        const dateB = new Date(b.start_date);
-
-        return dateA < dateB ? -1 : dateA > dateB ? 1 : 0;
-    });
-
-    const weekdays = {
-        0: 'Sunday',
-        1: 'Monday',
-        2: 'Tuesday',
-        3: 'Wednesday',
-        4: 'Thursday',
-        5: 'Friday',
-        6: 'Saturday',
-    };
-
+    const sortedDaysAppointments = sortByStartDate(daysAppointments);
     const nameOfDay = weekdays[dayNumber];
 
     // Note: This assumes 13 appointments per day, otherwise it will not wok.
-    const firstHalf = daysAppointments.slice(0, 5);
-    const secondHalf = daysAppointments.slice(5, 12);
+    const firstHalf = sortedDaysAppointments.slice(0, 5);
+    const secondHalf = sortedDaysAppointments.slice(5, 12);
 
     return (
         <div>
@@ -83,5 +67,3 @@ const DaysAppointments = ({ dayNumber, lastdayWithAppointments }) => {
         </div>
     );
 };
-
-export default DaysAppointments;

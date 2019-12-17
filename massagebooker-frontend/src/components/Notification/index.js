@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Notification = ({ notification }) => {
+export const Notification = ({ notification }) => {
     return (
         notification &&
         notification.message && (
@@ -13,5 +13,3 @@ const Notification = ({ notification }) => {
         )
     );
 };
-
-export default Notification;

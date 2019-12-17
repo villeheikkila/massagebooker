@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../pics/unity5.png';
 
-const AuthHeader = ({ user }) => {
+export const Header = ({ user }) => {
     const [open, setOpen] = useState(false);
 
     const toggleOpen = () => {
@@ -66,12 +66,3 @@ const AuthHeader = ({ user }) => {
         </nav>
     );
 };
-
-const Header = ({ user }) => {
-    if (user) {
-        return <AuthHeader user={user} />;
-    }
-    return <></>;
-};
-
-export default Header;

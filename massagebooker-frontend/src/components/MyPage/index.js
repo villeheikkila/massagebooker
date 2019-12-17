@@ -2,29 +2,28 @@ import React, { useContext, useEffect } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { NotificationContext, UserContext } from '../../App';
-import useField from '../../hooks/useField';
-import Notification from '../Notification';
-import OwnAppointments from '../OwnAppointments';
+import { useField } from '../../hooks/useField';
+import { Notification } from '../Notification';
+import { OwnAppointments } from './OwnAppointments';
 
-const MyPage = () => {
+export const MyPage = () => {
     const { user, setUser, userService } = useContext(UserContext);
     const { createNotification, notification, announcementNotification } = useContext(NotificationContext);
     const numberField = useField('text');
 
     useEffect(() => {
-        if (!user) return;
         numberField.changeValue(user.number);
     }, [user]);
+
+    if (!user) return <h2>Loading...</h2>;
 
     const handleNumberUpdate = async event => {
         event.preventDefault();
         try {
-            const number = numberField.value;
-            const updatedUser = { ...user, number };
-            const type = 'user';
+            const updatedUser = { ...user, number: numberField.value };
 
             setUser(updatedUser);
-            const response = await userService.update(user._id, updatedUser, type);
+            const response = await userService.update(user._id, updatedUser, 'user');
 
             if (response) {
                 createNotification(response.data.error);
@@ -98,5 +97,3 @@ const MyPage = () => {
         )
     );
 };
-
-export default MyPage;

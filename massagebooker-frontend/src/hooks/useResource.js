@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-const useResource = baseUrl => {
+export const useResource = baseUrl => {
     const [resources, setResources] = useState([]);
 
     const getAll = async () => {
@@ -47,11 +47,6 @@ const useResource = baseUrl => {
         return response.data;
     };
 
-    const setOne = async (path, data) => {
-        const response = await axios.post(`${baseUrl}/${path}`, data);
-        return response.data;
-    };
-
     const getInterval = async (start, end) => {
         const response = await axios.get(`${baseUrl}/${start}/${end}`);
         setResources(response.data);
@@ -68,12 +63,9 @@ const useResource = baseUrl => {
         update,
         getOne,
         updateExpectMany,
-        setOne,
         getInterval,
         createWithoutConcat,
     };
 
     return [resources, service];
 };
-
-export default useResource;

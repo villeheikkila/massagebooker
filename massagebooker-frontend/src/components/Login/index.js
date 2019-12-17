@@ -3,7 +3,7 @@ import GoogleButton from 'react-google-button';
 import unity4 from '../../pics/unity4.png';
 import unity5 from '../../pics/unity5.png';
 
-const LoginIndex = () => {
+export const Login = () => {
     const [width, setWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -33,5 +33,3 @@ const LoginIndex = () => {
         );
     }
 };
-
-export default LoginIndex;

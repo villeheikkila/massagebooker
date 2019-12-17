@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useState } from 'react';
 
-const Clock = () => {
+export const Clock = () => {
     const initial = moment();
     const initialHour = initial.hour();
     const initialMinutes = initial.minute();
@@ -19,5 +19,3 @@ const Clock = () => {
 
     return <div className="clock">{currentTime}</div>;
 };
-
-export default Clock;

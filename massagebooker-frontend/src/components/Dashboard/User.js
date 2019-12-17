@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { NotificationContext, UserContext } from '../../App';
 
-const User = ({ id, name, email, number, admin, avatarUrl, mobile }) => {
+export const User = ({ id, name, email, number, admin, avatarUrl, mobile }) => {
     const { user, userService } = useContext(UserContext);
     const { createNotification } = useContext(NotificationContext);
     const [visibility, setVisibility] = useState('none');
@@ -89,5 +89,3 @@ const User = ({ id, name, email, number, admin, avatarUrl, mobile }) => {
         </tr>
     );
 };
-
-export default User;

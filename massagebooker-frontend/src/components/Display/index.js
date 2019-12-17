@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Display = ({ dateobject, user, ownPage, free, removed, cancel }) => {
+export const Display = ({ dateobject, user, ownPage, free, removed, cancel }) => {
     const date = new Date(dateobject);
 
     const day = date.getDate();
@@ -22,5 +22,3 @@ const Display = ({ dateobject, user, ownPage, free, removed, cancel }) => {
         </h4>
     );
 };
-
-export default Display;

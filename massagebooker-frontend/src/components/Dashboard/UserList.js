@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
-import User from '../User';
+import { User } from './User';
 
-const UserList = () => {
+export const UserList = () => {
     const { users } = useContext(UserContext);
     const [filter, setFilter] = useState('');
     const [width, setWidth] = useState(window.innerWidth);
@@ -90,5 +90,3 @@ const UserList = () => {
         );
     }
 };
-
-export default UserList;
