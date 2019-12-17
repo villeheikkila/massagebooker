@@ -1,24 +1,24 @@
-const User = require('../models/user')
+const User = require('../models/user');
 
 const verifyIfAdmin = async (req, res, next) => {
-  if (process.env.NODE_ENV === 'test') return next()
+    if (process.env.NODE_ENV === 'test') return next();
 
-  const foundUser = await User.findById({ _id: req.user._id })
-  if (!foundUser.admin) return res.status(400).end()
+    const foundUser = await User.findById({ _id: req.user._id });
+    if (!foundUser.admin) return res.status(400).end();
 
-  next()
-}
+    next();
+};
 
 const verifyIfAdminOrSelf = async (req, res, next) => {
-  if (process.env.NODE_ENV === 'test') return next()
+    if (process.env.NODE_ENV === 'test') return next();
 
-  const foundUser = await User.findById({ _id: req.user._id })
-  const givenId = req.params.id
+    const foundUser = await User.findById({ _id: req.user._id });
+    const givenId = req.params.id;
 
-  if (String(givenId) === String(foundUser._id)) next()
-  if (!foundUser.admin) return res.status(400).end()
+    if (String(givenId) === String(foundUser._id)) next();
+    if (!foundUser.admin) return res.status(400).end();
 
-  next()
-}
+    next();
+};
 
-module.exports = { verifyIfAdmin, verifyIfAdminOrSelf }
+module.exports = { verifyIfAdmin, verifyIfAdminOrSelf };

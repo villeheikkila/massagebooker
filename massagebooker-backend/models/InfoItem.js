@@ -1,16 +1,16 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const infoItemSchema = mongoose.Schema({
-  header: {
-    type: String,
-    required: false,
-  },
-  content: {
-    type: String,
-    required: true,
-  }
-})
+    header: {
+        type: String,
+        required: false,
+    },
+    content: {
+        type: String,
+        required: true,
+    },
+});
 
-const InfoItem = mongoose.model('Info', infoItemSchema)
+const InfoItem = mongoose.model('Info', infoItemSchema);
 
-module.exports = InfoItem
+module.exports = InfoItem;

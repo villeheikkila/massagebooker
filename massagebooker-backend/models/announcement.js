@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const announcementSchema = mongoose.Schema({
-  message: String
-})
+    message: String,
+});
 
-const Announcement = mongoose.model('Announcement', announcementSchema)
+const Announcement = mongoose.model('Announcement', announcementSchema);
 
-module.exports = Announcement
+module.exports = Announcement;

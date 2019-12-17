@@ -1,9 +1,9 @@
-const express = require('express')
-const Appointment = require('../models/appointment')
-const appointmentsRouter = express.Router()
-const bodyParser = require('body-parser')
-appointmentsRouter.use(bodyParser.json())
-const logger = require('./logger')
+const express = require('express');
+const Appointment = require('../models/appointment');
+const appointmentsRouter = express.Router();
+const bodyParser = require('body-parser');
+appointmentsRouter.use(bodyParser.json());
+const logger = require('./logger');
 
 /**
  * Create appointments for the day given, starting from 8:55:00 .
@@ -12,10 +12,10 @@ const logger = require('./logger')
  * @param {*} date
  */
 const generateAppointmentsForDay = date => {
-  const firstShiftEnd = createAppointmentsInRow(new Date(date), 5)
-  const secondShiftStart = increaseTime(30, new Date(firstShiftEnd))
-  createAppointmentsInRow(secondShiftStart, 8)
-}
+    const firstShiftEnd = createAppointmentsInRow(new Date(date), 5);
+    const secondShiftStart = increaseTime(30, new Date(firstShiftEnd));
+    createAppointmentsInRow(secondShiftStart, 8);
+};
 
 /**
  * Creates 30min appointments in a row adding a 5 minute break between each appointment.
@@ -24,14 +24,14 @@ const generateAppointmentsForDay = date => {
  * @param {*} appointmentsInRow how many appointments in a row
  */
 const createAppointmentsInRow = (start, appointmentsInRow) => {
-  let end = new Date(start)
-  for (let i = 0; i < appointmentsInRow; i++) {
-    end = increaseTime(30, new Date(start))
-    createEmptyAppointment(start, end)
-    start = increaseTime(5, new Date(end))
-  }
-  return end
-}
+    let end = new Date(start);
+    for (let i = 0; i < appointmentsInRow; i++) {
+        end = increaseTime(30, new Date(start));
+        createEmptyAppointment(start, end);
+        start = increaseTime(5, new Date(end));
+    }
+    return end;
+};
 
 /**
  * Logic for minute increase.
@@ -39,46 +39,46 @@ const createAppointmentsInRow = (start, appointmentsInRow) => {
  * @param {*} currentTime
  */
 const increaseTime = (minutes, currentTime) => {
-  let currentMinutes = currentTime.getMinutes() + minutes
-  if (currentMinutes > 59) {
-    currentTime.setHours(currentTime.getHours() + 1)
-    currentMinutes = currentMinutes - 60
-  }
-  currentTime.setMinutes(currentMinutes)
-  return currentTime
-}
+    let currentMinutes = currentTime.getMinutes() + minutes;
+    if (currentMinutes > 59) {
+        currentTime.setHours(currentTime.getHours() + 1);
+        currentMinutes = currentMinutes - 60;
+    }
+    currentTime.setMinutes(currentMinutes);
+    return currentTime;
+};
 
 /**
  * start and end have to be turned into milliseconds by getTime() for the Database.
  * Checks if appointment exists
  */
 const createEmptyAppointment = async (start_date, end_date) => {
-  if (await doesAppointmentExist(new Date(start_date))) {
-    const appointment = new Appointment({
-      start_date: start_date.getTime(),
-      end_date: end_date.getTime(),
-      type_of_reservation: 0,
-    })
+    if (await doesAppointmentExist(new Date(start_date))) {
+        const appointment = new Appointment({
+            start_date: start_date.getTime(),
+            end_date: end_date.getTime(),
+            type_of_reservation: 0,
+        });
 
-    try {
-      await appointment.save()
-    } catch (error) {
-      logger.error(error.message)
+        try {
+            await appointment.save();
+        } catch (error) {
+            logger.error(error.message);
+        }
     }
-  }
-}
+};
 
 /**
  * Checks if the appointment already exists in the database before creating it.
  * @param {*} date the starting time of the appointment
  */
 const doesAppointmentExist = async date => {
-  const doesNotExist = await Appointment.find({ start_date: date })
-  return doesNotExist.length === 0 ? true : false
-}
+    const doesNotExist = await Appointment.find({ start_date: date });
+    return doesNotExist.length === 0 ? true : false;
+};
 
 module.exports = {
-  generateAppointmentsForDay,
-  increaseTime,
-  createAppointmentsInRow,
-}
+    generateAppointmentsForDay,
+    increaseTime,
+    createAppointmentsInRow,
+};
