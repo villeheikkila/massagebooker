@@ -46,12 +46,10 @@ statsRouter.get('/', async (req, res, next) => {
         const appointmentStats = appointmentStatistics(appointments);
         const userStats = userStatistics(users);
 
-        const statisticsToSend = {
+        res.json({
             ...appointmentStats,
             ...userStats,
-        };
-
-        res.json(statisticsToSend);
+        });
     } catch (exception) {
         next(exception);
     }

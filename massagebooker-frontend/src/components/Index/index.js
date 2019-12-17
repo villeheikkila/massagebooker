@@ -15,6 +15,49 @@ const Index = () => {
     return <LoginIndex />;
 };
 
+const titleClassName = (date, view, user, now, freeAppointments, selectedMoment) => {
+    if (view === 'month') {
+        let dateMoment = moment(date);
+        if (dateMoment.isBefore(now, 'days') || dateMoment.day() > 2 || dateMoment.day() === 0) {
+            return 'disabled';
+        } else {
+            if (dateMoment.isSame(selectedMoment, 'days')) {
+                // selected
+                if (user.appointments.filter(app => moment(app.start_date).isSame(dateMoment, 'days')).length > 0) {
+                    // selected, user has appointment for day
+                    return 'userHasAppSelected';
+                } else {
+                    // selected, user does not have app for day
+                    if (freeAppointments.filter(app => moment(app.start_date).isSame(dateMoment, 'day')).length > 0) {
+                        // selected, user does not have app, day has free app
+                        return 'hasFreeSelected';
+                    } else {
+                        // selected, user does not have app, no free apps
+                        return 'noneFreeSelected';
+                    }
+                }
+            } else {
+                // not selected
+                if (user.appointments.filter(app => moment(app.start_date).isSame(dateMoment, 'days')).length > 0) {
+                    // not selected, user has app for day
+                    return 'userHasApp';
+                } else {
+                    // not selected, user does not have app for day
+                    if (freeAppointments.filter(app => moment(app.start_date).isSame(dateMoment, 'day')).length > 0) {
+                        // not selected, user does not have app for day, day has free app
+                        return 'hasFree';
+                    } else {
+                        // not selected, user does not have app for day, no free apps
+                        return 'noneFree';
+                    }
+                }
+            }
+        }
+    }
+};
+
+const titleDisabled = (date, view) => view === 'month' && (date.getDay() > 2 || date.getDay() === 0);
+
 const AuthIndex = ({ user }) => {
     const { announcementNotification, announcement, notification } = useContext(NotificationContext);
     const { selectedDate, setSelectedDate, appointments } = useContext(AppointmentContext);
@@ -68,69 +111,10 @@ const AuthIndex = ({ user }) => {
                         minDetail="year"
                         prev2Label={null}
                         next2Label={null}
-                        tileClassName={({ date, view }) => {
-                            if (view === 'month') {
-                                let dateMoment = moment(date);
-                                if (
-                                    dateMoment.isBefore(now, 'days') ||
-                                    dateMoment.day() > 2 ||
-                                    dateMoment.day() === 0
-                                ) {
-                                    return 'disabled';
-                                } else {
-                                    if (dateMoment.isSame(selectedMoment, 'days')) {
-                                        // selected
-                                        if (
-                                            user.appointments.filter(app =>
-                                                moment(app.start_date).isSame(dateMoment, 'days'),
-                                            ).length > 0
-                                        ) {
-                                            // selected, user has appointment for day
-                                            return 'userHasAppSelected';
-                                        } else {
-                                            // selected, user does not have app for day
-                                            if (
-                                                freeAppointments.filter(app =>
-                                                    moment(app.start_date).isSame(dateMoment, 'day'),
-                                                ).length > 0
-                                            ) {
-                                                // selected, user does not have app, day has free app
-                                                return 'hasFreeSelected';
-                                            } else {
-                                                // selected, user does not have app, no free apps
-                                                return 'noneFreeSelected';
-                                            }
-                                        }
-                                    } else {
-                                        // not selected
-                                        if (
-                                            user.appointments.filter(app =>
-                                                moment(app.start_date).isSame(dateMoment, 'days'),
-                                            ).length > 0
-                                        ) {
-                                            // not selected, user has app for day
-                                            return 'userHasApp';
-                                        } else {
-                                            // not selected, user does not have app for day
-                                            if (
-                                                freeAppointments.filter(app =>
-                                                    moment(app.start_date).isSame(dateMoment, 'day'),
-                                                ).length > 0
-                                            ) {
-                                                // not selected, user does not have app for day, day has free app
-                                                return 'hasFree';
-                                            } else {
-                                                // not selected, user does not have app for day, no free apps
-                                                return 'noneFree';
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }}
-                        tileDisabled={({ date, view }) =>
-                            view === 'month' && (date.getDay() > 2 || date.getDay() === 0)
+                        tileClassName={({ date, view }) =>
+                            titleClassName(date, view, user, now, freeAppointments, selectedMoment)
                         }
+                        tileDisabled={({ date, view }) => titleDisabled(date, view)}
                         showNeighboringMonth={false}
                     />
                     {!isMobile && announcement && announcement.message ? (

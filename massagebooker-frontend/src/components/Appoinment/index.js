@@ -3,11 +3,10 @@ import { AppointmentContext, NotificationContext, UserContext } from '../../App'
 import CreateAppointment from '../CreateAppointment';
 import Display from '../Display';
 
-const Appointment = props => {
+const Appointment = ({ id, start_date, type_of_reservation, appUser, ownPage }) => {
     const { appointmentService } = useContext(AppointmentContext);
     const { user } = useContext(UserContext);
     const { createNotification } = useContext(NotificationContext);
-    const { id, start_date, type_of_reservation, appUser, ownPage } = props;
 
     const cancelAppointment = async () => {
         await appointmentService.update(id, { type_of_reservation: 0, user_id: user._id });

@@ -2,19 +2,19 @@ import moment from 'moment';
 import React, { useState } from 'react';
 
 const Clock = () => {
-    let initial = moment();
-    let initialHour = initial.hour();
-    let initialMinutes = initial.minute();
-    initialMinutes = initialMinutes < 10 ? `0${initialMinutes}` : initialMinutes;
-    const [currentTime, setCurrentTime] = useState(`${initialHour}:${initialMinutes}`);
+    const initial = moment();
+    const initialHour = initial.hour();
+    const initialMinutes = initial.minute();
+    const initialMinutesFormatted = initialMinutes < 10 ? `0${initialMinutes}` : initialMinutes;
+    const [currentTime, setCurrentTime] = useState(`${initialHour}:${initialMinutesFormatted}`);
 
     setInterval(() => {
-        let now = moment();
-        let hour = now.hour();
-        let minutes = now.minute();
-        minutes = minutes < 10 ? `0${minutes}` : minutes;
+        const now = moment();
+        const hour = now.hour();
+        const minutes = now.minute();
+        const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
 
-        setCurrentTime(`${hour}:${minutes}`);
+        setCurrentTime(`${hour}:${minutesFormatted}`);
     }, 1000);
 
     return <div className="clock">{currentTime}</div>;
