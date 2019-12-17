@@ -7,16 +7,16 @@ const AllAppointments = () => {
     const { users, user } = useContext(UserContext);
     const givenDate = new Date(selectedDate);
 
-    let selectedDay = givenDate.getDate();
-    let selectedMonth = givenDate.getMonth() + 1;
-    let selectedYear = givenDate.getFullYear();
+    const selectedDay = givenDate.getDate();
+    const selectedMonth = givenDate.getMonth() + 1;
+    const selectedYear = givenDate.getFullYear();
 
     // compares appointment time to selected date on calendar, filtering to only include selected days appointments
     const todaysAppointments = appointments.filter(appointment => {
-        let appointmentsDate = new Date(appointment.start_date);
-        let appointmentsDay = appointmentsDate.getDate();
-        let appointmentsMonth = appointmentsDate.getMonth() + 1;
-        let appointmentsYear = appointmentsDate.getFullYear();
+        const appointmentsDate = new Date(appointment.start_date);
+        const appointmentsDay = appointmentsDate.getDate();
+        const appointmentsMonth = appointmentsDate.getMonth() + 1;
+        const appointmentsYear = appointmentsDate.getFullYear();
 
         return (
             appointmentsMonth === selectedMonth && appointmentsDay === selectedDay && appointmentsYear === selectedYear
@@ -24,32 +24,20 @@ const AllAppointments = () => {
     });
 
     todaysAppointments.sort((a, b) => {
-        let dateA = new Date(a.start_date);
-        let dateB = new Date(b.start_date);
+        const dateA = new Date(a.start_date);
+        const dateB = new Date(b.start_date);
 
-        if (dateA < dateB) {
-            return -1;
-        }
-
-        if (dateA > dateB) {
-            return 1;
-        }
-
-        return 0;
+        return dateA < dateB ? -1 : dateA > dateB ? 1 : 0;
     });
 
-    const isUnavailable = value => {
-        return value.type_of_reservation === 3;
-    };
-
-    let unavailable = todaysAppointments.every(isUnavailable);
+    const unavailable = todaysAppointments.every(value => value.type_of_reservation === 3);
 
     const getStart_Date = date => {
-        date = new Date(date);
-        let minutes = date.getMinutes();
-        let time = date.getTimezoneOffset();
-        date.setMinutes(minutes + time);
-        return date;
+        const dateObject = new Date(date);
+        const minutes = dateObject.getMinutes();
+        const time = dateObject.getTimezoneOffset();
+        dateObject.setMinutes(minutes + time);
+        return dateObject;
     };
 
     const markDayUnavailable = async () => {
@@ -64,26 +52,23 @@ const AllAppointments = () => {
         todaysAppointments && (
             <div className="appointmentListWrapper">
                 <div className="controls">
-                    {user.admin === true ? (
-                        unavailable === false ? (
-                            <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
-                        ) : (
+                    {user.admin &&
+                        (unavailable ? (
                             <button onClick={() => markDayAvailable()}>Mark this day as available</button>
-                        )
-                    ) : null}
+                        ) : (
+                            <button onClick={() => markDayUnavailable()}>Mark this day as unavailable</button>
+                        ))}
                 </div>
                 <ul className="appointmentListWrapper">
-                    {todaysAppointments.map(app => {
-                        return (
-                            <Appointment
-                                key={app._id}
-                                id={app._id}
-                                start_date={getStart_Date(app.start_date)}
-                                type_of_reservation={app.type_of_reservation}
-                                appUser={users.find(u => u._id === app.user_id)}
-                            />
-                        );
-                    })}
+                    {todaysAppointments.map(app => (
+                        <Appointment
+                            key={app._id}
+                            id={app._id}
+                            start_date={getStart_Date(app.start_date)}
+                            type_of_reservation={app.type_of_reservation}
+                            appUser={users.find(user => user._id === app.user_id)}
+                        />
+                    ))}
                 </ul>
             </div>
         )

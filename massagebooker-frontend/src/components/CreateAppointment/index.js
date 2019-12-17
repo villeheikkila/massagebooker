@@ -9,7 +9,8 @@ const CreateAppointment = ({ id, start_date }) => {
     const { createNotification } = useContext(NotificationContext);
 
     const handleAppointmentCreation = async () => {
-        let ruleCheckResult = reservationRuleCheck(user.appointments, start_date);
+        const ruleCheckResult = reservationRuleCheck(user.appointments, start_date);
+
         if (ruleCheckResult.allowed) {
             await appointmentService.update(id, { type_of_reservation: 1, user_id: user._id });
             createNotification('Appointment reserved succesfully', 'success');
@@ -28,43 +29,43 @@ const CreateAppointment = ({ id, start_date }) => {
     );
 };
 
+const usersAppointmentsWithinTheLastTwoWeeks = (usersAppointments, requestedTimeMoment) => {
+    const firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week');
+
+    usersAppointments.filter(usersPreviousTime => {
+        const prevTimeMoment = moment(usersPreviousTime.start_date);
+        const firstWeekDayOfPrevtime = prevTimeMoment.startOf('week');
+        const dayDifference = firstWeekDayOfrequestedTimesWeek.diff(firstWeekDayOfPrevtime, 'days');
+        return Math.abs(dayDifference) < 14;
+    });
+
+    return usersAppointments.length === 0;
+};
+
+const usersAppointmentOnSameDay = (usersAppointments, now) =>
+    usersAppointments.find(time => {
+        const timeMoment = moment(time.start_date);
+        return timeMoment.isSame(now, 'day');
+    });
+
 const reservationRuleCheck = (usersAppointments, requestedAppointmentStartDate) => {
-    let result = {
-        allowed: false,
-        message: '',
-    };
-    let now = moment();
-    let requestedTimeMoment = moment(requestedAppointmentStartDate);
-    if (requestedTimeMoment.isBefore(now)) {
-        result.message = 'Tried to book past appointment';
-        return result;
-    }
+    const now = moment();
+    const requestedTimeMoment = moment(requestedAppointmentStartDate);
+
+    if (requestedTimeMoment.isBefore(now)) return { allowed: false, message: 'Tried to book past appointment' };
+
     if (requestedTimeMoment.isSame(now, 'days')) {
-        const usersAppointmentOnSameDay = usersAppointments.find(time => {
-            let timeMoment = moment(time.start_date);
-            return timeMoment.isSame(now, 'day');
-        });
-        if (usersAppointmentOnSameDay) {
-            result.message = 'You already have an appointment booked for today';
-            return result;
-        }
-        result.allowed = true;
-        return result;
+        const alreadyHasAppointmentSameDay = usersAppointmentOnSameDay(usersAppointments, now);
+
+        return alreadyHasAppointmentSameDay
+            ? { allowed: false, message: 'You already have an appointment booked for today' }
+            : { allowed: true, message: '' };
     } else {
-        let firstWeekDayOfrequestedTimesWeek = requestedTimeMoment.startOf('week');
-        let usersAppointmentsWithinTheLastTwoWeeks = usersAppointments.filter(usersPreviousTime => {
-            let prevTimeMoment = moment(usersPreviousTime.start_date);
-            let firstWeekDayOfPrevtime = prevTimeMoment.startOf('week');
-            let dayDifference = firstWeekDayOfrequestedTimesWeek.diff(firstWeekDayOfPrevtime, 'days');
-            return Math.abs(dayDifference) < 14;
-        });
-        if (usersAppointmentsWithinTheLastTwoWeeks.length === 0) {
-            result.allowed = true;
-            return result;
-        } else {
-            result.message = 'You already have an appointment within a week of this appointment';
-            return result;
-        }
+        const alreadyHasAppointment = usersAppointmentsWithinTheLastTwoWeeks(usersAppointments, requestedTimeMoment);
+
+        return alreadyHasAppointment
+            ? { allowed: true, message: '' }
+            : { allowed: false, message: 'You already have an appointment within a week of this appointment' };
     }
 };
 
