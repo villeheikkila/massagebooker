@@ -3,6 +3,7 @@ const Appointment = require('../models/appointment')
 const appointmentsRouter = express.Router()
 const bodyParser = require('body-parser')
 appointmentsRouter.use(bodyParser.json())
+const logger = require('./logger')
 
 /**
  * Create appointments for the day given, starting from 8:55:00 .
@@ -11,8 +12,8 @@ appointmentsRouter.use(bodyParser.json())
  * @param {*} date
  */
 const generateAppointmentsForDay = date => {
-  let firstShiftEnd = createAppointmentsInRow(new Date(date), 5)
-  let secondShiftStart = increaseTime(30, new Date(firstShiftEnd))
+  const firstShiftEnd = createAppointmentsInRow(new Date(date), 5)
+  const secondShiftStart = increaseTime(30, new Date(firstShiftEnd))
   createAppointmentsInRow(secondShiftStart, 8)
 }
 
@@ -58,10 +59,11 @@ const createEmptyAppointment = async (start_date, end_date) => {
       end_date: end_date.getTime(),
       type_of_reservation: 0,
     })
+
     try {
       await appointment.save()
-    } catch (exception) {
-      console.log(exception)
+    } catch (error) {
+      logger.error(error.message)
     }
   }
 }
@@ -71,11 +73,8 @@ const createEmptyAppointment = async (start_date, end_date) => {
  * @param {*} date the starting time of the appointment
  */
 const doesAppointmentExist = async date => {
-  let doesNotExist = await Appointment.find({ start_date: date })
-  if (doesNotExist.length === 0) {
-    return true
-  }
-  return false
+  const doesNotExist = await Appointment.find({ start_date: date })
+  return doesNotExist.length === 0 ? true : false
 }
 
 module.exports = {
