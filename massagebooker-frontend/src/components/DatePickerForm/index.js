@@ -1,8 +1,8 @@
 import addDays from 'date-fns/addDays';
 import getDay from 'date-fns/getDay';
 import React, { useContext, useState } from 'react';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { NotificationContext, StretchContext } from '../../App';

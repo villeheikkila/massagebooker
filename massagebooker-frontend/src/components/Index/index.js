@@ -1,6 +1,5 @@
 import moment from 'moment';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-//import Calendar from 'react-calendar';
 import Calendar from 'react-calendar';
 import { AppointmentContext, NotificationContext, UserContext } from '../../App';
 import AllAppointments from '../AllAppointments';

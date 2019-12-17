@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { NotificationContext, UserContext } from '../../App';
 import useField from '../../hooks/useField';
 import Notification from '../Notification';
@@ -32,8 +32,6 @@ const MyPage = () => {
                 createNotification('Succesfully changed number', 'success');
             }
         } catch (exception) {
-            console.log('response: ', exception);
-
             createNotification('Unable to change number');
         }
     };

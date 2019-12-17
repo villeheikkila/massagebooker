@@ -57,7 +57,6 @@ const App = () => {
         let twoWeeksAgo = moment().subtract(15, 'days');
         let sixWeeksFromNow = moment().add(43, 'days');
         appointmentService.getInterval(twoWeeksAgo, sixWeeksFromNow);
-        // appointmentService.getAll()
         statsService.getAll();
         stretchingService.getAll();
         announcementService.getAll();
