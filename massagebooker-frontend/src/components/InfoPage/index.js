@@ -1,52 +1,49 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NotificationContext, UserContext } from '../../App';
 import useField from '../../hooks/useField';
+import useResource from '../../hooks/useResource';
 import Notification from '../Notification';
 
-const InFoPage = ({ info, infoService }) => {
+const InFoPage = () => {
     const { user } = useContext(UserContext);
-    const [loaded, setLoaded] = useState(false);
     const { announcement, notification, createNotification } = useContext(NotificationContext);
+    const [info, infoService] = useResource('/api/info');
 
     useEffect(() => {
-        if (user) {
-            setLoaded(true);
-        }
-    }, [user]);
+        infoService.getAll();
+    }, []);
+
+    if (!user || !info[0]) return <h2>Loading...</h2>;
+
+    const { _id, header, content } = info[0];
 
     return (
-        loaded && (
-            <div className="infoPage">
-                {notification && <Notification notification={notification} />}
-                {user.admin && <CreateInfoItem infoService={infoService} createNotification={createNotification} />}
-                <div>
-                    <ul>
-                        {info.map(item => {
-                            return (
-                                <>
-                                    <InfoItem key={item._id} header={item.header} content={item.content} />
-                                    {user.admin && (
-                                        <DeleteInfoItem
-                                            id={item._id}
-                                            infoService={infoService}
-                                            createNotification={createNotification}
-                                        />
-                                    )}
-                                </>
-                            );
-                        })}
-                    </ul>
-                </div>
-                <div>
-                    {announcement && announcement.message && (
-                        <div className="index_notice">
-                            <h2>Notice</h2>
-                            <p>{announcement.message}</p>
-                        </div>
-                    )}
-                </div>
+        <div className="infoPage">
+            {notification && <Notification notification={notification} />}
+            {user.admin && <CreateInfoItem infoService={infoService} createNotification={createNotification} />}
+            <div>
+                <ul>
+                    <>
+                        <InfoItem key={_id} header={header} content={content} />
+                        {user.admin && (
+                            <DeleteInfoItem
+                                id={_id}
+                                infoService={infoService}
+                                createNotification={createNotification}
+                            />
+                        )}
+                    </>
+                </ul>
             </div>
-        )
+            <div>
+                {announcement && announcement.message && (
+                    <div className="index_notice">
+                        <h2>Notice</h2>
+                        <p>{announcement.message}</p>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 };
 
