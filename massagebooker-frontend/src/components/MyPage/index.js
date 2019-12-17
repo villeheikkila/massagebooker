@@ -9,7 +9,7 @@ import OwnAppointments from '../OwnAppointments';
 const MyPage = () => {
     const { user, setUser, userService } = useContext(UserContext);
     const { createNotification, notification, announcementNotification } = useContext(NotificationContext);
-    let numberField = useField('text');
+    const numberField = useField('text');
 
     useEffect(() => {
         if (!user) return;

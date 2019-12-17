@@ -9,25 +9,17 @@ const OwnAppointments = ({ ownPage }) => {
 
     const getStart_Date = date => {
         date = new Date(date);
-        let minutes = date.getMinutes();
-        let time = date.getTimezoneOffset();
+        const minutes = date.getMinutes();
+        const time = date.getTimezoneOffset();
         date.setMinutes(minutes + time);
         return date;
     };
 
     ownAppointments.sort((a, b) => {
-        let dateA = new Date(a.start_date);
-        let dateB = new Date(b.start_date);
+        const dateA = new Date(a.start_date);
+        const dateB = new Date(b.start_date);
 
-        if (dateA < dateB) {
-            return -1;
-        }
-
-        if (dateA > dateB) {
-            return 1;
-        }
-
-        return 0;
+        return dateA < dateB ? -1 : dateA > dateB ? 1 : 0;
     });
 
     return (

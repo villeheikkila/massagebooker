@@ -15,7 +15,7 @@ const TV = () => {
         tvService.getAll();
     }, []);
 
-    /* every 24 minutes force page refresh to keep next appointment up to date. */
+    // every 24 minutes force page refresh to keep next appointment up to date.
     setInterval(() => {
         window.location.reload();
     }, 1440000);
@@ -26,15 +26,15 @@ const TV = () => {
         return null;
     }
 
-    /* Find next appointment */
+    // Find next appointment
     const comingAppointments = tv.filter(app => {
-        let appStartTime = moment(app.start_date);
+        const appStartTime = moment(app.start_date);
         return appStartTime.isAfter(now);
     });
 
-    comingAppointments.sort(function(a, b) {
-        let dateA = new Date(a.start_date),
-            dateB = new Date(b.start_date);
+    comingAppointments.sort((a, b) => {
+        const dateA = new Date(a.start_date);
+        const dateB = new Date(b.start_date);
         return dateA - dateB;
     });
 
@@ -48,7 +48,7 @@ const TV = () => {
                 <Clock />
 
                 <h2>NEXT APPOINTMENT</h2>
-                {next ? (
+                {next && (
                     <ul className="tvViewAppointmentList">
                         <div className="cont_tv">
                             <SimpleAppointment
@@ -60,15 +60,15 @@ const TV = () => {
                             />
                         </div>
                     </ul>
-                ) : (
-                    ''
                 )}
-                {announcement && announcement.message ? (
+
+                {announcement && announcement.message && (
                     <div className="tv_notice">
                         <h2>Notice</h2>
                         <p>{announcement.message}</p>
                     </div>
-                ) : null}
+                )}
+
                 <img className="logoTV" id="unity4" src={unity4} alt=""></img>
             </div>
             <div className="day-view">

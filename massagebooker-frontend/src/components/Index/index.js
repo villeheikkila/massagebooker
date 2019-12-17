@@ -60,7 +60,7 @@ const Index = ({ user }) => {
     }, []);
 
     useEffect(() => {
-        let startDate = new Date();
+        const startDate = new Date();
         const MONDAY_DATE_KEY = 1;
         // If today not monday or tuesday
         // https://stackoverflow.com/a/27336600
@@ -73,8 +73,8 @@ const Index = ({ user }) => {
 
     const isMobile = width <= 1160;
 
-    let selectedMoment = moment(selectedDate);
-    let now = moment();
+    const selectedMoment = moment(selectedDate);
+    const now = moment();
 
     return (
         <>
@@ -83,12 +83,13 @@ const Index = ({ user }) => {
             ) : (
                 <NextAppointment user={user} appointments={appointments} />
             )}
-            {isMobile ? <Notification notification={announcementNotification} /> : null}
-            {isMobile ? (
+
+            {isMobile && <Notification notification={announcementNotification} />}
+            {isMobile && (
                 <div className="index_notification_container">
                     <Notification notification={notification} />
                 </div>
-            ) : null}
+            )}
 
             <div className="appointmentListWrapperMain">
                 <div>

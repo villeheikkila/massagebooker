@@ -106,7 +106,7 @@ const DeleteStretchSession = ({ date, sessionID }) => {
         try {
             await stretchingService.remove(sessionID);
 
-            let dateData = new Date(date);
+            const dateData = new Date(date);
             let minuteAddition = '';
             // Fix situations like 10:05 where notification would display 10:5
             if (dateData.getMinutes() < 10) {

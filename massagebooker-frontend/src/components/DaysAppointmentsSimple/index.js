@@ -23,9 +23,9 @@ const DaysAppointmentsSimple = ({ dayNumber, lastdayWithAppointments, appointmen
         return day.isSame(appointmentsDate, 'day');
     });
 
-    daysAppointments.sort(function(a, b) {
-        let dateA = new Date(a.start_date),
-            dateB = new Date(b.start_date);
+    daysAppointments.sort((a, b) => {
+        const dateA = new Date(a.start_date);
+        const dateB = new Date(b.start_date);
         return dateA - dateB;
     });
 

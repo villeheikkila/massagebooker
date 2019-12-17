@@ -29,7 +29,7 @@ const useResource = baseUrl => {
         const data = updatedResources.data;
 
         const updatedAppointments = resources.map(app => {
-            let appUpdated = data.find(app2 => app2._id === app._id);
+            const appUpdated = data.find(app2 => app2._id === app._id);
             return appUpdated ? { ...app, ...appUpdated } : app;
         });
 

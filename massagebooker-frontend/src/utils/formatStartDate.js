@@ -1,8 +1,8 @@
 /* helper for correcting timezone offset*/
 const formatStartDate = date => {
     date = new Date(date);
-    let minutes = date.getMinutes();
-    let time = date.getTimezoneOffset();
+    const minutes = date.getMinutes();
+    const time = date.getTimezoneOffset();
     date.setMinutes(minutes + time);
     return date;
 };

@@ -48,23 +48,21 @@ const SimpleAppointment = ({ app }) => {
 };
 
 const NextAppointment = ({ user, appointments }) => {
-    let ownAppointments = appointments.filter(app => app.user_id === user._id);
+    const ownAppointments = appointments.filter(app => app.user_id === user._id);
 
-    ownAppointments.sort(function(a, b) {
-        let dateA = new Date(a.start_date),
-            dateB = new Date(b.start_date);
+    ownAppointments.sort((a, b) => {
+        const dateA = new Date(a.start_date);
+        const dateB = new Date(b.start_date);
         return dateA - dateB;
     });
 
-    if (ownAppointments[0] === undefined) {
-        return (
-            <div className="desktop_no_appointments_info">
-                <p>You currently have no appointments booked, you can reserve one using the calendar below.</p>
-            </div>
-        );
-    }
-
-    return <SimpleAppointment app={ownAppointments[0]} />;
+    return !ownAppointments[0] ? (
+        <div className="desktop_no_appointments_info">
+            <p>You currently have no appointments booked, you can reserve one using the calendar below.</p>
+        </div>
+    ) : (
+        <SimpleAppointment app={ownAppointments[0]} />
+    );
 };
 
 export default NextAppointment;
